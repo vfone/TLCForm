@@ -1,0 +1,54 @@
+<h1>Personal &amp; Contact Details</h1>
+<p>INSTRUCTIONS FOR STUDENTS: Please ensure you complete every question. This information is required to complete assessment of your eligibility for training and / or funding. We will also use this document to complete your enrolment should you be offered and accept enrolment. Please call our office if you have any questions at any time.  Once we receive the completed pre-enrolment application, we will call you to discuss the application and the next step in getting you started in your chosen course.</p>
+<p>Before applying to enrol TLC Training Solutions, please make sure you read the following:</p>
+<ul class="listCheck">
+  <li>Refund Policy and Procedure</li>
+  <li>Pre-Enrolment Agreement</li>
+  <li>Student Code of Conduct</li>
+  <li>Student Handbook </li>
+  <li>Course Guide</li>
+</ul>
+<div class="checkbox">
+  <label>
+    <input type="checkbox" ng-model="HasAgreeTermAtBeginning"> I have read through the policies and agree the terms.
+  </label>
+</div>
+<h2>Personal Details</h2>
+<h3>Title</h3>
+<label class="radio-inline" ng-repeat="title in Titles">
+  <input type="radio"  ng-model="$parent.Title" value="{{title.TitleId}}"> {{title.TitleName}}
+</label>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="FamilyName">Surname</label>
+      <input type="text" class="form-control" ng-model="FamilyName">
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="GivenName">Legal Given Name/s</label>
+      <input type="text" class="form-control" ng-model="GivenName">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="PreferdName">Preferred Name(optional)</label>
+      <input type="text" class="form-control" ng-model="PreferdName">
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="DateOfBirth">Date of Birth (dd/mm/yyyy)</label>
+      <input type="text" calendar class="form-control" ng-model="DateOfBirth">
+    </div>
+  </div>
+</div>
+<h3>Gender</h3>
+<label class="radio-inline" ng-repeat="gender in Genders">
+  <input type="radio" ng-model="$parent.Gender" value="{{gender.GenderId}}"> {{gender.GenderDescription}}
+</label>
+<h2>XXXXXXXXXX</h2>
+<h3>Title</h3>

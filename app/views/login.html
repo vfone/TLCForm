@@ -1,0 +1,83 @@
+<div class="loginLogo">
+  <img src="../images/logo.png" />
+</div>
+<div class="loginBox" >
+  <div class="btn-group" role="group" ng-hide="isRestURL">
+    <a class="btn btn-default tabBtn" ng-click="isSignIn=true" ng-init="isSignIn=true" role="button" ng-class="{'btn-success':isSignIn}">Sign In</a>
+    <a class="btn btn-default tabBtn" ng-click="isSignIn=false" role="button" ng-class="{'btn-success':!isSignIn}">Sign Up</a>
+  </div>
+  <div class="btn-group" role="group" ng-show="isRestURL">
+    <a class="btn btn-danger fulltabBtn" disabled="disabled" role="button">Reset Password</a>
+  </div>
+  <div class="loginForm" ng-if="isSignIn" ng-hide="isRestURL"><!--Sign In Form-->
+    <div class="inner">
+      <div class="alert alert-success alert-dismissible" ng-show="resetSent" ng-init="resetSent=false" role="alert">
+        <button type="button" class="close" ng-click="resetSent=false" aria-label="Close"><span >&times;</span></button>
+        An email has been sent, please check to reset your password.
+      </div>
+      <div class="control-group" ng-class="{'error':!isEmailValid}" ng-init="isEmailValid=true">
+        <label for="UserId">Email address</label>
+        <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div> -->
+        <input type="text" class="form-control" id="UserId" ng-model="UserId" ng-blur="checkEmail()" placeholder="yourname@email.com">
+      </div>
+      <div class="control-group" ng-hide="showLostPwdBtn">
+        <label for="Password">Password</label>
+        <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div> -->
+        <input type="password" class="form-control" id="Password" ng-model="Password" maxlength="10" placeholder="**********">
+      </div>
+
+      <a class="btn btn-primary btn-signin" ng-click="fnSignin()" role="button" ng-hide="showLostPwdBtn">Log In</a>
+      <a class="btn btn-link btn-lostpwd" ng-click="showLostPwdBtn=true" ng-init="showLostPwdBtn=false" role="button" ng-hide="showLostPwdBtn">Lost password?</a>
+      <div class="row">
+        <div class="col-md-8"><a class="btn btn-danger btn-signin" ng-click="fnRecovery()" role="button" ng-show="showLostPwdBtn">Recovery</a></div>
+        <div class="col-md-4"><a class="btn btn-default btn-signin" ng-click="showLostPwdBtn=false" role="button" ng-show="showLostPwdBtn">Cancel</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="loginForm" ng-if="!isSignIn" ng-hide="isRestURL"><!--Sign Up Form-->
+    <div class="inner">
+      <div class="control-group">
+        <label for="GivenName">Given Name</label>
+        <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div> -->
+        <input type="text" class="form-control" id="GivenName" ng-model="GivenName" placeholder="John">
+      </div>
+      <div class="control-group">
+        <label for="FamilyName">Family Name</label>
+        <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div> -->
+        <input type="text" class="form-control" id="FamilyName" ng-model="FamilyName" placeholder="Smith">
+      </div>
+      <div class="control-group" ng-class="{'error':!isEmailValid}" ng-init="isEmailValid=true">
+        <label for="NewUserId">Email address</label>
+        <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div> -->
+        <input type="text" class="form-control" id="NewUserId" ng-model="UserId" ng-blur="checkEmail()" placeholder="yourname@email.com">
+      </div>
+      <div class="control-group" ng-class="{'error':!isPasswordValid}" ng-init="isPasswordValid=true">
+        <label for="NewPassword">Password <i>(8-10 characters with at least 1 digit, 1 uppercase, 1 lowercase)</i></label>
+        <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div> -->
+        <input type="password" class="form-control" id="NewPassword" ng-model="Password" ng-blur="checkPassword()" maxlength="10" placeholder="**********">
+      </div>
+
+      <a class="btn btn-primary btn-signin" ng-click="fnSignup()" role="button">Create Account</a>
+    </div>
+  </div>
+  <div class="loginForm" ng-show="isRestURL"><!--Reset Form-->
+    <div class="inner">
+      <div class="alert alert-danger alert-dismissible" ng-show="!isResetPasswordValid" ng-init="isResetPasswordValid=true" role="alert">
+        <button type="button" class="close"  aria-label="Close"><span >&times;</span></button>
+        Passwords should be same and fulfil strength requirement.
+      </div>
+      <div class="control-group" ng-class="{'error':!isResetPasswordValid}" ng-init="isResetPasswordValid=true">
+        <label for="ResetPassword">Password <i>(8-10 characters with at least 1 digit, 1 uppercase, 1 lowercase)</i></label>
+        <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div> -->
+        <input type="password" class="form-control" id="ResetPassword" ng-model="ResetPassword" ng-blur="checkResetPassword()" maxlength="10" placeholder="**********">
+      </div>
+      <div class="control-group" ng-class="{'error':!isResetPasswordValid}" ng-init="isResetPasswordValid=true">
+        <label for="ResetPasswordAgain">Type password again</label>
+        <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div> -->
+        <input type="password" class="form-control" id="ResetPasswordAgain" ng-model="ResetPasswordAgain" ng-blur="comparePassword()" maxlength="10" placeholder="**********">
+      </div>
+
+      <a class="btn btn-danger btn-signin" ng-click="fnReset()" role="button">Reset</a>
+    </div>
+  </div>
+</div>
