@@ -54,8 +54,9 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
   var coreFn = {};
   coreFn.lookupData = {}; //lookup data for form fields
   coreFn.applicantData = {}; //return applicant's data
-  coreFn.isVerified = false; //if userid and password verified
-  coreFn.isSent = false; //if recovery password sent
+  $rootScope.isVerified = false; //if userid and password verified
+  $rootScope.isOK = true; //return res from post
+  $rootScope.isSent = false; //if recovery password sent
   coreFn.validateEmail = function(email){
     var re = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     return(re.test(email));
@@ -118,6 +119,9 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
   }
   coreFn.UTCTime = function(date){
     var dateArr = date.split('/');
+    if(isNaN(parseInt(dateArr[0]))|| isNaN(parseInt(dateArr[1])) || isNaN(parseInt(dateArr[2]))){
+      return false;
+    }
     return (dateArr[2]+'-'+dateArr[1]+'-'+dateArr[0]+'T00:00:00');
   }
   //get Lookup data
@@ -139,7 +143,9 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
   };
   coreFn.postData = function(postURL, data, action){
     var res = true;
-
+    console.log('POSTING URL:');
+    console.log(postURL);
+    console.log('POSTING DATA:');
     console.log(data);
     var promise = $http({
       method: 'POST',
@@ -158,19 +164,30 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
         //recovery: request reset password, expect an email to be sent
         //reset: update user password expect return OK with Applicant Data or NOT OK;
         //postform: submit form data expect return OK or NOT OK;
+
         console.log(res);
-        if(action == 'login' || action == 'create' || action == 'reset'){
-          coreFn.applicantData = res;
-          coreFn.isVerified = true;
+        if(res === 'NOTOK'){
+          $rootScope.isOK = false;
         }
-        else if(action == 'recovery'){
-          coreFn.isSent = true;
+        else{
+          $rootScope.isOK = true;
+          if(action == 'login' || action == 'create' || action == 'reset'){
+            coreFn.applicantData = res;
+            isVerified.isVerified = true;
+          }
+          else if(action == 'recovery'){
+            $rootScope.isSent = true;
+          }
+        }
+        if(action == 'step2'){
+          $location.path('/employment');
         }
         return res;
     }).
     error(function(data, status, headers, config) {
+        console.log(data);
         if(action == 'login' || action == 'create' || action == 'reset'){
-          coreFn.isVerified = false;
+          $rootScope.isVerified = false;
         }
         else if(action == 'recovery'){
           coreFn.isSent = false;

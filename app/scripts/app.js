@@ -25,11 +25,16 @@ angular
         controller: 'PersonalCtrl',
         controllerAs: 'personal'
       })
+      .when('/employment', {
+        templateUrl: 'views/employment.html',
+        controller: 'EmploymentlCtrl',
+        controllerAs: 'employment'
+      })
       .otherwise({
         redirectTo: '/'
       });
   })
-  .directive('calendar', function () {
+  .directive('dob', function () {
     return {
         require: 'ngModel',
         link: function (scope, el, attr, ngModel) {
@@ -39,4 +44,16 @@ angular
             });
         }
     };
-});
+  })
+  .directive('expirydate', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, el, attr, ngModel) {
+            $(el).datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true
+            });
+        }
+    };
+  })
+  ;

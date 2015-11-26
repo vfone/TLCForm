@@ -11,19 +11,20 @@ angular.module('tlcApp')
    .controller('LoginCtrl', function ($rootScope, $scope, $route, $location, settingFactory, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
      //check if current URL is an reset URL
-     $scope.isRestURL = false;
+     $scope.isResetURL = false;
      $scope.token = coreFactory.parseURLPara('token');
+     $scope.isOK = $rootScope.isOK;
      if($scope.token){
-       $scope.isRestURL = true;
+       $scope.isResetURL = true;
      }
      //get lookupData
      coreFactory.fetchData(settingFactory.lookupURL);
 
      $scope.fnSignin = function(){
-       var signinData = {"PassKey": settingFactory.passKey, "UserId": this.UserId, "Password": this.UserId};
+       var signinData = {"PassKey": settingFactory.passKey, "UserId": this.UserId, "Password": this.Password};
        //post to step1a for signin
        coreFactory.postData(settingFactory.loginURL, signinData, 'login');
-       if(coreFactory.isVerified){
+       if($rootScope.isVerified){
          //relocation to personal view
          $location.path('/personal');
        }
@@ -42,7 +43,7 @@ angular.module('tlcApp')
        var recoveryData = {"PassKey": settingFactory.passKey, "UserId": this.UserId};
        //post to step1 for signup
        coreFactory.postData(settingFactory.recoveryURL, recoveryData, 'recovery');
-       if(coreFactory.isSent){
+       if($rootScope.isSent){
          this.showLostPwdBtn = false;
          this.resetSent = true;
        }
@@ -51,7 +52,7 @@ angular.module('tlcApp')
        var resetData = {"PassKey": settingFactory.passKey, "Token": this.token, "Password": this.ResetPassword};
        //post to step1 for signup
        coreFactory.postData(settingFactory.resetURL, resetData, 'reset');
-       if(coreFactory.isVerified){
+       if($rootScope.isVerified){
          //relocation to personal view
          $location.path('/personal');
        }

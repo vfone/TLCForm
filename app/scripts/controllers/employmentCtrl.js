@@ -8,7 +8,7 @@
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
-   .controller('PersonalCtrl', function ($rootScope, $scope, $location, settingFactory, coreService, coreFactory) {
+   .controller('EmploymentCtrl', function ($rootScope, $scope, $location, settingFactory, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
      if(!$rootScope.isVerified){
        //if user not verifed, redirect to login page
@@ -99,7 +99,7 @@ angular.module('tlcApp')
          this.stepValidMsg['Postal Postcode:'] = "Please provide your [Postal Postcode]";
          this.stepValid = false;
        }
-       if(this.PreferredMailType === undefined){
+       if(this.PreferedMailType === undefined){
          this.stepValidMsg['Prefered Mail Type:'] = "Please provide your [Prefered Mail Type]";
          this.stepValid = false;
        }
@@ -130,7 +130,7 @@ angular.module('tlcApp')
        }
        if(this.stepValid){
          //POST
-         var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.GivenName, "HasAgreeTermAtBeginning": parseInt(this.HasAgreeTermAtBeginning), "Title": parseInt(this.Title), "PreferredName": this.PreferredName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": parseInt(this.Gender), "HomePhone": this.HomePhone, "MobilePhone": this.WorkPhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": parseInt(this.HomeState), "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": parseInt(this.PostalState), "PostalPostCode": this.PostalPostCode,"PreferredMailType":parseInt(this.PreferredMailType), "HasUSI": parseInt(this.HasUSI), "USI": this.USI, "USIAuthorise": parseInt(this.USIAuthorise), "HasConcessionCard": parseInt(this.HasConcessionCard), "ConcessionCardType": parseInt(this.ConcessionCardType), "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};
+         var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.GivenName, "HasAgreeTermAtBeginning": this.HasAgreeTermAtBeginning, "Title": this.Title, "PreferedName": this.PreferedName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": this.Gender, "HomePhone": this.HomePhone, "MobilePhone": this.WorkPhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": this.HomeState, "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": this.PostalState, "PostalPostCode": this.PostalPostCode,"PreferedMailType":this.PreferedMailType, "HasUSI": this.HasUSI, "USI": this.USI, "USIAuthorise": this.USIAuthorise, "HasConcessionCard": this.HasConcessionCard, "ConcessionCardType": this.ConcessionCardType, "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};
          coreFactory.postData(settingFactory.step2URL, step2Data, 'step2');
 
        }
