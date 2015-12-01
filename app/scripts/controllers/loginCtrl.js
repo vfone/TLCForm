@@ -17,6 +17,9 @@ angular.module('tlcApp')
      if($scope.token){
        $scope.isResetURL = true;
      }
+     if($rootScope.isVerified){
+       $location.path('/personal');
+     }
      //get lookupData
      coreFactory.fetchData(settingFactory.lookupURL);
 
@@ -24,19 +27,11 @@ angular.module('tlcApp')
        var signinData = {"PassKey": settingFactory.passKey, "UserId": this.UserId, "Password": this.Password};
        //post to step1a for signin
        coreFactory.postData(settingFactory.loginURL, signinData, 'login');
-       if($rootScope.isVerified){
-         //relocation to personal view
-         $location.path('/personal');
-       }
      };
      $scope.fnSignup = function(){
-       var signupData = {"PassKey": settingFactory.passKey, "GivenName": this.GivenName, "FamilyName": this.FamilyName, "UserId": this.UserId, "Password": this.Password};
+       var signupData = {"PassKey": settingFactory.passKey, "GivenName": this.GivenName, "FamilyName": this.FamilyName, "Email": this.UserId, "Password": this.Password};
        //post to step1 for signup
        coreFactory.postData(settingFactory.createURL, signupData, 'create');
-       if(coreFactory.isVerified){
-         //relocation to personal view
-         $location.path('/personal');
-       }
      };
      $scope.fnRecovery = function(){
        this.isLostPwd = false;
@@ -52,10 +47,6 @@ angular.module('tlcApp')
        var resetData = {"PassKey": settingFactory.passKey, "Token": this.token, "Password": this.ResetPassword};
        //post to step1 for signup
        coreFactory.postData(settingFactory.resetURL, resetData, 'reset');
-       if($rootScope.isVerified){
-         //relocation to personal view
-         $location.path('/personal');
-       }
      };
      $scope.checkEmail = function(){
        this.isEmailValid = coreFactory.validateEmail(this.UserId);

@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name tlcApp.controller:PersonalCtrl
+ * @name tlcApp.controller:EmploymentCtrl
  * @description
- * # PersonalCtrl
+ * # EmploymentCtrl
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
@@ -131,7 +131,7 @@ angular.module('tlcApp')
        if(this.stepValid){
          //POST
          var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.GivenName, "HasAgreeTermAtBeginning": this.HasAgreeTermAtBeginning, "Title": this.Title, "PreferedName": this.PreferedName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": this.Gender, "HomePhone": this.HomePhone, "MobilePhone": this.WorkPhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": this.HomeState, "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": this.PostalState, "PostalPostCode": this.PostalPostCode,"PreferedMailType":this.PreferedMailType, "HasUSI": this.HasUSI, "USI": this.USI, "USIAuthorise": this.USIAuthorise, "HasConcessionCard": this.HasConcessionCard, "ConcessionCardType": this.ConcessionCardType, "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};
-         coreFactory.postData(settingFactory.step2URL, step2Data, 'step2');
+         coreFactory.postData(settingFactory.step2URL, step2Data, 'step3');
 
        }
      }

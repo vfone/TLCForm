@@ -117,6 +117,13 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
     }
     return translated;
   }
+  coreFn.translateDigit = function(res){
+    var translated = true;
+    if(res === 0){
+      translated = false;
+    }
+    return translated;
+  }
   coreFn.UTCTime = function(date){
     var dateArr = date.split('/');
     if(isNaN(parseInt(dateArr[0]))|| isNaN(parseInt(dateArr[1])) || isNaN(parseInt(dateArr[2]))){
@@ -141,7 +148,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
 
     });
   };
-  coreFn.postData = function(postURL, data, action){
+  coreFn.postData = function(postURL, data, ev){
     var res = true;
     console.log('POSTING URL:');
     console.log(postURL);
@@ -171,15 +178,18 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
         }
         else{
           $rootScope.isOK = true;
-          if(action == 'login' || action == 'create' || action == 'reset'){
+          console.log(ev);
+          if(ev == 'login' || ev == 'create' || ev == 'reset'){
             coreFn.applicantData = res;
-            isVerified.isVerified = true;
+            //coreService.m('applicantData',coreService.StringifyJSON(res));
+            $rootScope.isVerified = true;
+            $location.path('/personal');
           }
-          else if(action == 'recovery'){
+          else if(ev == 'recovery'){
             $rootScope.isSent = true;
           }
         }
-        if(action == 'step2'){
+        if(ev == 'step2'){
           $location.path('/employment');
         }
         return res;

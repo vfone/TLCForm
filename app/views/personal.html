@@ -11,17 +11,19 @@
       <li>Student Handbook </li>
       <li>Course Guide</li>
     </ul>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" ng-model="HasAgreeTermAtBeginning"> I have read through the policies and agree the terms.
-      </label>
+    <div class="control-group" ng-class="{'error':HasAgreeTermAtBeginningErr}" >
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="HasAgreeTermAtBeginning"> I have read through the policies and agree the terms.
+        </label>
+      </div>
     </div>
   </div>
   <h2>Personal Details</h2>
   <div class="section">
-    <div class="form-group">
+    <div class="form-group control-group" ng-class="{'error':TitlesErr}" >
       <label for="Titles">Title</label>
-      <br/>
+      <br/>{{Title}}{{userTitle}}
       <label class="radio-inline" ng-repeat="title in Titles">
         <input type="radio" ng-model="$parent.Title" value="{{title.TitleId}}"> {{title.TitleName}}
       </label>
@@ -43,18 +45,18 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="PreferdName">Preferred Name(optional)</label>
+          <label for="PreferredName">Preferred Name(optional)</label>
           <input type="text" class="form-control" ng-model="PreferdName">
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group control-group" ng-class="{'error':DateOfBirthErr}">
           <label for="DateOfBirth">Date of Birth (dd/mm/yyyy)</label>
           <input type="text" dob class="form-control" ng-model="DateOfBirth">
         </div>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group control-group" ng-class="{'error':GenderErr}">
       <label for="Gender">Gender</label>
       <br/>
       <label class="radio-inline" ng-repeat="gender in Genders">
@@ -72,7 +74,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group control-group" ng-class="{'error':MobilePhoneErr}">
           <label for="MobilePhone">Mobile Phone</label>
           <input type="text" class="form-control" ng-model="MobilePhone">
         </div>
@@ -80,7 +82,7 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group control-group" ng-class="{'error':WorkPhoneErr}">
           <label for="WorkPhone">Work Phone</label>
           <input type="text" class="form-control" ng-model="WorkPhone">
         </div>
@@ -96,7 +98,7 @@
   <h2>Address</h2>
   <div class="section">
     <h3>What is the address of where you usually live?</h3>
-    <div class="form-group">
+    <div class="form-group control-group" ng-class="{'error':HomeAddressLine1Err}">
       <label for="HomeAddressLine1">Address Line 1</label>
       <input type="text" class="form-control" ng-model="HomeAddressLine1">
     </div>
@@ -106,20 +108,20 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
-          <label for="HomeSuburb">Suburb, Locality or Town</label>
-          <input type="text" class="form-control" ng-model="HomeSuburb">
+        <div class="form-group control-group" ng-class="{'error':HomeSuburbErr}">
+          <label for="HomeSuburb" >Suburb, Locality or Town</label>
+          <input type="text"  class="form-control " ng-model="HomeSuburb">
         </div>
       </div>
       <div class="col-md-3">
-        <div class="form-group">
+        <div class="form-group control-group" ng-class="{'error':HomeStateErr}">
           <label for="HomeState">State</label>
           <select class="form-control" ng-model="HomeState" ng-options="state.StateId as state.StateName for state in States">
           </select>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="form-group">
+        <div class="form-group control-group" ng-class="{'error':HomePostCodeErr}">
           <label for="HomePostCode">Postcode</label>
           <input type="number" class="form-control" ng-model="HomePostCode" onKeyDown="if(this.value.length==4) return false;">
         </div>
@@ -128,7 +130,7 @@
     <h3>What is your postal address?
       <span class="pull-right"><input type="checkbox" ng-click="sameAddress()" ng-model="isSameAddress" ng-init="isSameAddress = false" > As Above</span>
     </h3>
-    <div class="form-group">
+    <div class="form-group control-group" ng-class="{'error':PostalAddressLine1Err}">
       <label for="PostalAddressLine1">Address Line 1</label>
       <input type="text" class="form-control" ng-model="PostalAddressLine1">
     </div>
@@ -138,26 +140,27 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group control-group" ng-class="{'error':PostalSuburbErr}">
           <label for="PostalSuburb">Suburb, Locality or Town</label>
           <input type="text" class="form-control" ng-model="PostalSuburb">
         </div>
       </div>
       <div class="col-md-3">
-        <div class="form-group">
+        <div class="form-group control-group" ng-class="{'error':PostalStateErr}">
           <label for="PostalState">State</label>
           <select class="form-control" ng-model="PostalState" ng-options="state.StateId as state.StateName for state in States">
           </select>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="form-group">
+        <div class="form-group control-group" ng-class="{'error':PostalPostCodeErr}">
           <label for="PostalPostCode">Postcode</label>
           <input type="number" class="form-control" ng-model="PostalPostCode" onKeyDown="if(this.value.length==4) return false;">
         </div>
       </div>
     </div>
-    <h3>Please indicate how you would like to receive correspondence from TLC?</h3>
+    <div class="form-group control-group" ng-class="{'error':PreferredMailTypeErr}">
+      <h3>Please indicate how you would like to receive correspondence from TLC?</h3>
 
       <label class="radio-inline">
         <input type="radio" ng-model="PreferredMailType" value="1"> Email
@@ -165,11 +168,13 @@
       <label class="radio-inline">
         <input type="radio" ng-model="PreferredMailType" value="2"> Mail
       </label>
+    </div>
   </div>
   <h2>Unique Student Identifier (USI)</h2>
   <div class="section">
     <p>From January 1, 2015 all learners studying nationally recognised training in Australia are required to have a Unique Student Identifier.</p>
-    <h3>Do you have a Unique Student Identifier?</h3>
+    <div class="form-group control-group" ng-class="{'error':HasUSIErr}">
+      <h3>Do you have a Unique Student Identifier?</h3>
 
       <label class="radio-inline">
         <input type="radio" ng-model="HasUSI" value="1"> Yes
@@ -177,8 +182,9 @@
       <label class="radio-inline">
         <input type="radio" ng-model="HasUSI" value="0"> No
       </label>
+    </div>
     <form class="form-inline section" ng-show="HasUSI==1">
-      <div class="form-group">
+      <div class="form-group control-group" ng-class="{'error':USIErr}">
         <label for="USI">USI</label>
         <input type="text" class="form-control" maxlength="10" ng-model="USI" >
       </div>
@@ -192,25 +198,27 @@
   </div>
   <h2>Concession Card</h2>
   <div class="section">
-    <h3>Do you have a concession card? An eligible concession card is a Health Care or Pensioner Concession Card held by you, or your partner or guardian as long as you are named on the card. </h3>
-    <label class="radio-inline">
-      <input type="radio" ng-model="HasConcessionCard" value="1"> Yes
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="HasConcessionCard" value="0"> No
-    </label>
+    <div class="form-group control-group" ng-class="{'error':HasConcessionCardErr}">
+      <h3>Do you have a concession card? An eligible concession card is a Health Care or Pensioner Concession Card held by you, or your partner or guardian as long as you are named on the card. </h3>
+      <label class="radio-inline">
+        <input type="radio" ng-model="HasConcessionCard" value="1"> Yes
+      </label>
+      <label class="radio-inline">
+        <input type="radio" ng-model="HasConcessionCard" value="0"> No
+      </label>
+    </div>
     <div ng-show="HasConcessionCard==1">
       <p>Complete details below. N.B. Your concession card MUST be available to sight at enrolment.</p>
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group">
+          <div class="form-group control-group" ng-class="{'error':ConcessionCardTypeErr}">
             <label for="ConcessionCardType">Type of Card</label>
             <select class="form-control" ng-model="ConcessionCardType" ng-options="concessioncard.ConcessionCardId as concessioncard.ConcessionCardName for concessioncard in ConcessionCards">
             </select>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="form-group">
+          <div class="form-group control-group" ng-class="{'error':ConcessionCardNumberErr}">
             <label for="ConcessionCardNumber">Card number</label>
             <input type="text" class="form-control" maxlength="10" ng-model="ConcessionCardNumber" >
           </div>
@@ -218,13 +226,13 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group">
+          <div class="form-group control-group" ng-class="{'error':ConcessionCardNameErr}">
             <label for="ConcessionCardName">Name on card</label>
             <input type="text" class="form-control" ng-model="ConcessionCardName" >
           </div>
         </div>
         <div class="col-md-6">
-          <div class="form-group">
+          <div class="form-group control-group" ng-class="{'error':ConcessionCardExpiryDateErr}">
             <label for="ConcessionCardExpiryDate">Expiry Date</label>
             <input type="text" expirydate class="form-control" ng-model="ConcessionCardExpiryDate" >
           </div>
@@ -232,10 +240,11 @@
       </div>
     </div>
   </div>
-  <div class="alert alert-danger alert-dismissible"  role="alert" ng-show='!stepValid'>
-    <button type="button" class="close" ng-click="$root.isOK=true" aria-label="Close"><span >&times;</span></button>
-    <p>Sorry, you have to address below issues:</p>
-    {{stepValidMsg}}
+  <div class="section">
+    <div class="alert alert-danger alert-dismissible"  role="alert" ng-show='!stepValid'>
+      <button type="button" class="close" ng-click="$root.isOK=true" aria-label="Close"><span >&times;</span></button>
+      <h5>Sorry, required info missing!</h5>
+    </div>
   </div>
   <div class="bottomCtrl">
       <a class="btn btn-default" ng-click="prev()" role="button">Prev</a>

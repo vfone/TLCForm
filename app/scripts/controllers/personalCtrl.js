@@ -15,7 +15,7 @@ angular.module('tlcApp')
        //$location.path('/');  TODO: enable when ready
        coreFactory.fetchData(settingFactory.lookupURL); //TODO: delete this when ready
      }
-     $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
+
      $scope.lookupData = coreService.ParseJSON(coreService.getLocalStorage('lookupData'));
      $scope.Titles = $scope.lookupData.Titles;
      $scope.Genders= $scope.lookupData.Genders;
@@ -26,7 +26,16 @@ angular.module('tlcApp')
      $scope.ConcessionCardType = $scope.ConcessionCards[0].ConcessionCardId;
      $scope.stepValid = true;
      $scope.stepValidMsg = {};
+     if(coreFactory.applicantData.ApplicantId){
+       $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
+       $scope.HasAgreeTermAtBeginning = coreFactory.translateDigit(coreFactory.applicantData.HasAgreeTermAtBeginning);
+       $scope.Title = 2;
+       $scope.FamilyName = coreFactory.applicantData.FamilyName;
+       $scope.GivenName = coreFactory.applicantData.GivenName;
+       $scope.Genders = 3;
 
+       $scope.UserId = coreFactory.applicantData.Email;
+     }
      $scope.changedValue = function(item){
        console.log(item);
      };
@@ -50,87 +59,126 @@ angular.module('tlcApp')
      };
      $scope.next = function(){
        this.stepValidMsg = {};
+       //init
+       this.stepValid = true;
+       this.HasAgreeTermAtBeginningErr = false;
+       this.TitlesErr = false;
+       this.DateOfBirthErr = false;
+       this.GenderErr = false
+       this.MobilePhoneErr = false;
+       this.WorkPhoneErr = false;
+       this.HomeAddressLine1Err = false;
+       this.HomeSuburbErr = false;
+       this.HomePostCodeErr = false;
+       this.PostalAddressLine1Err = false;
+       this.PostalSuburbErr = false;
+       this.PostalPostCodeErr = false;
+       this.PreferredMailTypeErr = false;
+       this.HasUSIErr = false;
+       this.USIErr = false;
+       this.HasConcessionCardErr = false;
+       this.ConcessionCardNumberErr = false;
+       this.ConcessionCardNameErr = false;
+       this.ConcessionCardExpiryDateErr = false;
        //validate step 1
        if(coreFactory.translateBoolean(this.HasAgreeTermAtBeginning) === 0){
          this.stepValidMsg['Agree terms:'] = "Please tick [Agree] terms";
+         this.HasAgreeTermAtBeginningErr = true;
          this.stepValid = false;
        }
        if(this.Title === undefined){
          this.stepValidMsg['Title:'] = "Please select your [Title]";
+         this.TitlesErr = true;
          this.stepValid = false;
        }
        if(!coreFactory.UTCTime(this.DateOfBirth) || !coreFactory.ispastDate(this.DateOfBirth)){
          this.stepValidMsg['DOB:'] = "Please select your [Date of Birth]";
+         this.DateOfBirthErr = true;
          this.stepValid = false;
        }
        if(this.Gender === undefined){
          this.stepValidMsg['Gender:'] = "Please select your [Gender]";
+         this.GenderErr = true;
          this.stepValid = false;
        }
        if(this.MobilePhone === undefined || this.MobilePhone === ''){
          this.stepValidMsg['MobilePhone:'] = "Please provide your [MobilePhone]";
+         this.MobilePhoneErr = true;
          this.stepValid = false;
        }
        if(this.WorkPhone === undefined || this.WorkPhone === ''){
          this.stepValidMsg['WorkPhone:'] = "Please provide your [WorkPhone]";
+         this.WorkPhoneErr = true;
          this.stepValid = false;
        }
        if(this.HomeAddressLine1 === undefined || this.HomeAddressLine1 === ''){
          this.stepValidMsg['Home Address Line1:'] = "Please provide your [Home Address Line 1]";
+         this.HomeAddressLine1Err = true;
          this.stepValid = false;
        }
        if(this.HomeSuburb === undefined || this.HomeSuburb === ''){
          this.stepValidMsg['Home Suburb:'] = "Please provide your [Home Suburb]";
+         this.HomeSuburbErr = true;
          this.stepValid = false;
        }
        if(this.HomePostCode === undefined || this.HomePostCode === ''){
          this.stepValidMsg['Home Postcode:'] = "Please provide your [Home Postcode]";
+         this.HomePostCodeErr = true;
          this.stepValid = false;
        }
        if(this.PostalAddressLine1 === undefined || this.PostalAddressLine1 === ''){
          this.stepValidMsg['Postal Address Line1:'] = "Please provide your [Postal Address Line 1]";
+         this.PostalAddressLine1Err = true;
          this.stepValid = false;
        }
        if(this.PostalSuburb === undefined || this.PostalSuburb === ''){
          this.stepValidMsg['Postal Suburb:'] = "Please provide your [Postal Suburb]";
+         this.PostalSuburbErr = true;
          this.stepValid = false;
        }
        if(this.PostalPostCode === undefined || this.PostalPostCode === ''){
          this.stepValidMsg['Postal Postcode:'] = "Please provide your [Postal Postcode]";
+         this.PostalPostCodeErr = true;
          this.stepValid = false;
        }
        if(this.PreferredMailType === undefined){
          this.stepValidMsg['Prefered Mail Type:'] = "Please provide your [Prefered Mail Type]";
+         this.PreferredMailTypeErr = true;
          this.stepValid = false;
        }
        if(this.HasUSI === undefined){
          this.stepValidMsg['Has USI:'] = "Please check if you have [USI]";
+         this.HasUSIErr = true;
          this.stepValid = false;
        }
        if(coreFactory.translateBoolean(this.HasUSI) === 1 && (this.USI === undefined || this.USI === '')){
          this.stepValidMsg['USI:'] = "Please provide you [USI]";
+         this.USIErr = true;
          this.stepValid = false;
        }
-       console.log(typeof this.HasConcessionCard);
        if(this.HasConcessionCard === undefined){
          this.stepValidMsg['Has Concession Card:'] = "Please check if you have [Concession Card]";
+         this.HasConcessionCardErr = true;
          this.stepValid = false;
        }
        if(this.HasConcessionCard === '1' && (this.ConcessionCardNumber === undefined || this.ConcessionCardNumber === '')){
          this.stepValidMsg['Concession Card Number:'] = "Please provide you [Concession Card Number]";
+         this.ConcessionCardNumberErr = true;
          this.stepValid = false;
        }
        if(this.HasConcessionCard === '1' && (this.ConcessionCardName === undefined || this.ConcessionCardName === '')){
          this.stepValidMsg['Name on Card:'] = "Please provide you [Name on Card]";
+         this.ConcessionCardNameErr = true;
          this.stepValid = false;
        }
        if(this.HasConcessionCard === '1' && (!coreFactory.UTCTime(this.ConcessionCardExpiryDate) || coreFactory.ispastDate(this.ConcessionCardExpiryDate))){
          this.stepValidMsg['Concession Card Expiry Date:'] = "Please check your [Concession Card Expiry Date]";
+         this.ConcessionCardExpiryDateErr = true;
          this.stepValid = false;
        }
        if(this.stepValid){
          //POST
-         var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.GivenName, "HasAgreeTermAtBeginning": parseInt(this.HasAgreeTermAtBeginning), "Title": parseInt(this.Title), "PreferredName": this.PreferredName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": parseInt(this.Gender), "HomePhone": this.HomePhone, "MobilePhone": this.WorkPhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": parseInt(this.HomeState), "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": parseInt(this.PostalState), "PostalPostCode": this.PostalPostCode,"PreferredMailType":parseInt(this.PreferredMailType), "HasUSI": parseInt(this.HasUSI), "USI": this.USI, "USIAuthorise": parseInt(this.USIAuthorise), "HasConcessionCard": parseInt(this.HasConcessionCard), "ConcessionCardType": parseInt(this.ConcessionCardType), "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};
+         var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "HasAgreeTermAtBeginning": parseInt(this.HasAgreeTermAtBeginning), "Title": parseInt(this.Title), "PreferredName": this.PreferredName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": parseInt(this.Gender), "HomePhone": this.HomePhone, "MobilePhone": this.WorkPhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": parseInt(this.HomeState), "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": parseInt(this.PostalState), "PostalPostCode": this.PostalPostCode,"PreferredMailType":parseInt(this.PreferredMailType), "HasUSI": parseInt(this.HasUSI), "USI": this.USI, "USIAuthorise": parseInt(this.USIAuthorise), "HasConcessionCard": parseInt(this.HasConcessionCard), "ConcessionCardType": parseInt(this.ConcessionCardType), "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};
          coreFactory.postData(settingFactory.step2URL, step2Data, 'step2');
 
        }

@@ -27,7 +27,7 @@ angular
       })
       .when('/employment', {
         templateUrl: 'views/employment.html',
-        controller: 'EmploymentlCtrl',
+        controller: 'EmploymentCtrl',
         controllerAs: 'employment'
       })
       .otherwise({
