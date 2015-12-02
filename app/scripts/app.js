@@ -30,6 +30,16 @@ angular
         controller: 'EmploymentCtrl',
         controllerAs: 'employment'
       })
+      .when('/information', {
+        templateUrl: 'views/information.html',
+        controller: 'InformationCtrl',
+        controllerAs: 'information'
+      })
+      .when('/course', {
+        templateUrl: 'views/course.html',
+        controller: 'CourseCtrl',
+        controllerAs: 'course'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -56,4 +66,44 @@ angular
         }
     };
   })
+  .directive('schoolyear', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, el, attr, ngModel) {
+            $(el).datepicker({
+                format: 'yyyy',
+                startView: "years",
+                minViewMode: "years",
+                autoclose: true
+            });
+        }
+    };
+  })
+  .directive('qualificationyear', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, el, attr, ngModel) {
+            $(el).datepicker({
+                format: 'yyyy',
+                startView: "years",
+                minViewMode: "years",
+                autoclose: true
+            });
+        }
+    };
+  })
+  .directive('lastworkyear', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, el, attr, ngModel) {
+            $(el).datepicker({
+                format: 'yyyy',
+                startView: "years",
+                minViewMode: "years",
+                autoclose: true
+            });
+        }
+    };
+  })
+
   ;

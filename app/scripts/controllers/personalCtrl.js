@@ -12,8 +12,7 @@ angular.module('tlcApp')
      $scope.coreFactory = coreFactory;
      if(!$rootScope.isVerified){
        //if user not verifed, redirect to login page
-       //$location.path('/');  TODO: enable when ready
-       coreFactory.fetchData(settingFactory.lookupURL); //TODO: delete this when ready
+       //$location.path('/');
      }
 
      $scope.lookupData = coreService.ParseJSON(coreService.getLocalStorage('lookupData'));
@@ -29,12 +28,44 @@ angular.module('tlcApp')
      if(coreFactory.applicantData.ApplicantId){
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
        $scope.HasAgreeTermAtBeginning = coreFactory.translateDigit(coreFactory.applicantData.HasAgreeTermAtBeginning);
-       $scope.Title = 2;
+       $scope.Title = coreFactory.applicantData.Title;
        $scope.FamilyName = coreFactory.applicantData.FamilyName;
        $scope.GivenName = coreFactory.applicantData.GivenName;
-       $scope.Genders = 3;
-
+       $scope.PreferredName = coreFactory.applicantData.PreferredName;
+       var dataDOB = new Date(coreFactory.applicantData.DateOfBirth);
+       var ddDOB = parseInt(dataDOB.getDate())>10? dataDOB.getDate() :'0'+dataDOB.getDate();
+       var mmDOB = parseInt(dataDOB.getMonth())+1>10? dataDOB.getMonth() :'0'+(parseInt(dataDOB.getMonth())+1);
+       var yyyyDOB = dataDOB.getFullYear();
+       $scope.DateOfBirth = ddDOB+'/'+mmDOB+'/'+yyyyDOB;
+       $(".DateOfBirth").datepicker("update", new Date(coreFactory.applicantData.DateOfBirth));
+       $scope.Gender = coreFactory.applicantData.Gender;
+       $scope.HomePhone = coreFactory.applicantData.HomePhone;
+       $scope.MobilePhone = coreFactory.applicantData.MobilePhone;
+       $scope.WorkPhone = coreFactory.applicantData.WorkPhone;
        $scope.UserId = coreFactory.applicantData.Email;
+       $scope.HomeAddressLine1 = coreFactory.applicantData.HomeAddressLine1;
+       $scope.HomeAddressLine2 = coreFactory.applicantData.HomeAddressLine2;
+       $scope.HomeSuburb = coreFactory.applicantData.HomeSuburb;
+       $scope.HomeState = coreFactory.applicantData.HomeState;
+       $scope.HomePostCode = parseInt(coreFactory.applicantData.HomePostCode);
+       $scope.PostalAddressLine1 = coreFactory.applicantData.PostalAddressLine1;
+       $scope.PostalAddressLine2 = coreFactory.applicantData.PostalAddressLine2;
+       $scope.PostalSuburb = coreFactory.applicantData.PostalSuburb;
+       $scope.PostalState = coreFactory.applicantData.PostalState;
+       $scope.PostalPostCode = parseInt(coreFactory.applicantData.PostalPostCode);
+       $scope.PreferredMailType = coreFactory.applicantData.PreferredMailType;
+       $scope.HasUSI = coreFactory.translateBoolean(coreFactory.applicantData.HasUSI);
+       $scope.USI = coreFactory.applicantData.USI;
+       $scope.HasConcessionCard = coreFactory.translateBoolean(coreFactory.applicantData.HasConcessionCard);
+       $scope.ConcessionCardType = coreFactory.applicantData.ConcessionCardType;
+       $scope.ConcessionCardNumber = coreFactory.applicantData.ConcessionCardNumber;
+       $scope.ConcessionCardName = coreFactory.applicantData.ConcessionCardName;
+       var dataConcessionCardExpiryDate = new Date(coreFactory.applicantData.ConcessionCardExpiryDate);
+       var ddConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getDate())>10? dataConcessionCardExpiryDate.getDate() :'0'+dataConcessionCardExpiryDate.getDate();
+       var mmConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getMonth())+1>10? dataConcessionCardExpiryDate.getMonth() :'0'+(parseInt(dataConcessionCardExpiryDate.getMonth())+1);
+       var yyyyConcessionCardExpiryDate = dataConcessionCardExpiryDate.getFullYear();
+       $scope.ConcessionCardExpiryDate = ddConcessionCardExpiryDate+'/'+mmConcessionCardExpiryDate+'/'+yyyyConcessionCardExpiryDate;
+       $(".ConcessionCardExpiryDate").datepicker("update", new Date(coreFactory.applicantData.ConcessionCardExpiryDate));
      }
      $scope.changedValue = function(item){
        console.log(item);

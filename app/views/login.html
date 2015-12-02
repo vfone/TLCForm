@@ -22,12 +22,12 @@
       <div class="control-group" ng-class="{'error':!isEmailValid}" ng-init="isEmailValid=true">
         <label for="UserId">Email address</label>
         <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div> -->
-        <input type="text" class="form-control" id="UserId" ng-model="UserId" ng-blur="checkEmail()" placeholder="yourname@email.com">
+        <input type="text" class="form-control" id="UserId" ng-model="UserId = 'vfone.four@gmail.com'" ng-blur="checkEmail()" placeholder="yourname@email.com" >
       </div>
       <div class="control-group" ng-hide="showLostPwdBtn">
         <label for="Password">Password</label>
         <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div> -->
-        <input type="password" class="form-control" id="Password" ng-model="Password" maxlength="10" placeholder="**********">
+        <input type="password" class="form-control" id="Password" ng-model="Password = '123456Aa'" maxlength="10" placeholder="**********" >
       </div>
 
       <a class="btn btn-primary btn-signin" ng-click="fnSignin()" role="button" ng-hide="showLostPwdBtn">Log In</a>

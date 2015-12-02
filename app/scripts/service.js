@@ -111,9 +111,9 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
     return false;
   };
   coreFn.translateBoolean = function(res){
-    var translated = 0;
+    var translated = '0';
     if(res){
-      translated = 1;
+      translated = '1';
     }
     return translated;
   }
@@ -192,19 +192,26 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
         if(ev == 'step2'){
           $location.path('/employment');
         }
+        if(ev == 'step3'){
+          $location.path('/information');
+        }
+        if(ev == 'step4'){
+          $location.path('/course');
+        }
+        if(ev == 'step5'){
+          window.location = settingFactory.uploadFile;
+        }
         return res;
     }).
     error(function(data, status, headers, config) {
-        console.log(data);
-        if(action == 'login' || action == 'create' || action == 'reset'){
+        data = data!==null?data:{'Message':'Connection failed!'};
+        if(ev == 'login' || ev == 'create' || ev == 'reset'){
           $rootScope.isVerified = false;
         }
-        else if(action == 'recovery'){
+        else if(ev == 'recovery'){
           coreFn.isSent = false;
         }
         coreService.modalWindow('show', 'modalErrorWindow', 'Oooops, something went wrong', data.Message + ' Please try it again.', 'click', 'Button Text', false);
-
-      //self.modalWindow('show', 'modalErrorWindow');
     }).
     then(function(d){
       return d;

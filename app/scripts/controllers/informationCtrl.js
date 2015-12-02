@@ -2,29 +2,27 @@
 
 /**
  * @ngdoc function
- * @name tlcApp.controller:EmploymentCtrl
+ * @name tlcApp.controller:InformationCtrl
  * @description
- * # EmploymentCtrl
+ * # InformationCtrl
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
-   .controller('EmploymentCtrl', function ($rootScope, $scope, $location, settingFactory, coreService, coreFactory) {
+   .controller('InformationCtrl', function ($rootScope, $scope, $location, settingFactory, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
      if(!$rootScope.isVerified){
        //if user not verifed, redirect to login page
        //$location.path('/');
      }
+
      $scope.lookupData = coreService.ParseJSON(coreService.getLocalStorage('lookupData'));
-     console.log($scope.lookupData);
-     $scope.EmploymentStatuses = $scope.lookupData.EmploymentStatuses;
-     $scope.CompletedSchoolYears= $scope.lookupData.CompletedSchoolYears;
-     $scope.Qualifications = $scope.lookupData.Qualifications;
-     $scope.QualificationTypes = $scope.lookupData.QualificationTypes;
-     $scope.EnrolledCourses = $scope.lookupData.EnrolledCourses;
-     $scope.EmploymentStatuses = $scope.lookupData.EmploymentStatuses;
-     $scope.EnrolledCourses = $scope.lookupData.EnrolledCourses;
+     $scope.Titles = $scope.lookupData.Titles;
+     $scope.Genders= $scope.lookupData.Genders;
      $scope.States = $scope.lookupData.States;
-     $scope.EmployerState = $scope.States[0].StateId;
+     $scope.HomeState = $scope.States[0].StateId;
+     $scope.PostalState = $scope.States[0].StateId;
+     $scope.ConcessionCards = $scope.lookupData.ConcessionCards;
+     $scope.ConcessionCardType = $scope.ConcessionCards[0].ConcessionCardId;
      $scope.stepValid = true;
      $scope.stepValidMsg = {};
      if(coreFactory.applicantData.ApplicantId){
@@ -69,12 +67,27 @@ angular.module('tlcApp')
        $scope.ConcessionCardExpiryDate = ddConcessionCardExpiryDate+'/'+mmConcessionCardExpiryDate+'/'+yyyyConcessionCardExpiryDate;
        $(".ConcessionCardExpiryDate").datepicker("update", new Date(coreFactory.applicantData.ConcessionCardExpiryDate));
      }
-     $scope.checkEmail = function(){
-       this.EmployerEmailErr = !coreFactory.validateEmail(this.EmployerEmail);
-     }
-     $scope.prev = function(){
-       $location.path('/personal');
-     }
+     $scope.changedValue = function(item){
+       console.log(item);
+     };
+     $scope.sameAddress = function(){
+       console.log(this.HomeState);
+       console.log(this.PostalState);
+       if(this.isSameAddress){
+         this.PostalAddressLine1 = this.HomeAddressLine1;
+         this.PostalAddressLine2 = this.HomeAddressLine2;
+         this.PostalSuburb = this.HomeSuburb;
+         this.PostalState = this.HomeState;
+         this.PostalPostCode = this.HomePostCode;
+       }
+       else{
+         this.PostalAddressLine1 = '';
+         this.PostalAddressLine2 = '';
+         this.PostalSuburb = '';
+         this.PostalState = $scope.States[0].StateId;
+         this.PostalPostCode = '';
+       }
+     };
      $scope.next = function(){
        this.stepValidMsg = {};
        //init
@@ -196,8 +209,8 @@ angular.module('tlcApp')
        }
        if(this.stepValid){
          //POST
-         var step3Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "EmploymentStatus": parseInt(this.EmploymentStatus), "StillAttendSecondarySchool": this.StillAttendSecondarySchool, "PreferredName": this.PreferredName, "NameofSecondarySchool": this.NameofSecondarySchool, "QLDSchoolLeaver": this.QLDSchoolLeaver, "LUI": this.LUI, "CompletedSchoolLevel": this.CompletedSchoolLevel, "CompletedSchoolYear": this.CompletedSchoolYear, "UploadYear12Certification": this.UploadYear12Certification, "CompletedFormalQual": this.CompletedFormalQual, "QualificationAchieved": this.QualificationAchieved, "QualificationTitleAchieved": this.QualificationTitleAchieved, "QualificationAchievedYear": this.QualificationAchievedYear, "QualificationType": this.QualificationType, "EnrolledNationallyRecognizedCourse": this.EnrolledNationallyRecognizedCourse, "CourseEnrolledIn": this.CourseEnrolledIn, "QualificationTitle": this.QualificationTitle, "Unemployed": this.Unemployed,"EmployerLegalName":this.EmployerLegalName, "EmployerTradingName": this.EmployerTradingName, "EmployerAddress1": this.EmployerAddress1, "EmployerAddress2": this.EmployerAddress2, "EmployerSuburb": this.EmployerSuburb, "EmployerState": parseInt(this.EmployerState), "EmployerPostcode": this.EmployerPostcode, "EmployerPhone": this.EmployerPhone, "EmployerFax": this.EmployerFax, "EmployerEmail": this.EmployerEmail,"EmployerContactPerson": this.EmployerContactPerson,"CurrentlyHasRelevantWork": this.CurrentlyHasRelevantWork,"HowLongWork": this.HowLongWork,"CurrentPosition": this.CurrentPosition,"WhenLastWork": this.WhenLastWork,"QLDChildcare": this.QLDChildcare,"UploadBlueCard": this.UploadBlueCard,"NSWChildcare": this.NSWChildcare,"UploadChildrenCheck": this.UploadChildrenCheck,"AgeCare": this.AgeCare,"UploadCriminalHistoryCheck": this.UploadCriminalHistoryCheck};
-         coreFactory.postData(settingFactory.step3URL, step3Data, 'step3');
+         var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "HasAgreeTermAtBeginning": parseInt(this.HasAgreeTermAtBeginning), "Title": parseInt(this.Title), "PreferredName": this.PreferredName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": parseInt(this.Gender), "HomePhone": this.HomePhone, "MobilePhone": this.WorkPhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": parseInt(this.HomeState), "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": parseInt(this.PostalState), "PostalPostCode": this.PostalPostCode,"PreferredMailType":parseInt(this.PreferredMailType), "HasUSI": parseInt(this.HasUSI), "USI": this.USI, "USIAuthorise": parseInt(this.USIAuthorise), "HasConcessionCard": parseInt(this.HasConcessionCard), "ConcessionCardType": parseInt(this.ConcessionCardType), "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};
+         coreFactory.postData(settingFactory.step2URL, step2Data, 'step2');
 
        }
      }
