@@ -27,47 +27,54 @@ angular.module('tlcApp')
      $scope.EmployerState = $scope.States[0].StateId;
      $scope.stepValid = true;
      $scope.stepValidMsg = {};
+     if($.isEmptyObject(coreFactory.applicantData)){
+       coreFactory.applicantData = coreService.ParseJSON(coreService.getLocalStorage('applicantData'));
+     }
      if(coreFactory.applicantData.ApplicantId){
+       console.log(coreFactory.applicantData);
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
-       $scope.HasAgreeTermAtBeginning = coreFactory.translateDigit(coreFactory.applicantData.HasAgreeTermAtBeginning);
-       $scope.Title = coreFactory.applicantData.Title;
-       $scope.FamilyName = coreFactory.applicantData.FamilyName;
-       $scope.GivenName = coreFactory.applicantData.GivenName;
-       $scope.PreferredName = coreFactory.applicantData.PreferredName;
-       var dataDOB = new Date(coreFactory.applicantData.DateOfBirth);
-       var ddDOB = parseInt(dataDOB.getDate())>10? dataDOB.getDate() :'0'+dataDOB.getDate();
-       var mmDOB = parseInt(dataDOB.getMonth())+1>10? dataDOB.getMonth() :'0'+(parseInt(dataDOB.getMonth())+1);
-       var yyyyDOB = dataDOB.getFullYear();
-       $scope.DateOfBirth = ddDOB+'/'+mmDOB+'/'+yyyyDOB;
-       $(".DateOfBirth").datepicker("update", new Date(coreFactory.applicantData.DateOfBirth));
-       $scope.Gender = coreFactory.applicantData.Gender;
-       $scope.HomePhone = coreFactory.applicantData.HomePhone;
-       $scope.MobilePhone = coreFactory.applicantData.MobilePhone;
-       $scope.WorkPhone = coreFactory.applicantData.WorkPhone;
-       $scope.UserId = coreFactory.applicantData.Email;
-       $scope.HomeAddressLine1 = coreFactory.applicantData.HomeAddressLine1;
-       $scope.HomeAddressLine2 = coreFactory.applicantData.HomeAddressLine2;
-       $scope.HomeSuburb = coreFactory.applicantData.HomeSuburb;
-       $scope.HomeState = coreFactory.applicantData.HomeState;
-       $scope.HomePostCode = parseInt(coreFactory.applicantData.HomePostCode);
-       $scope.PostalAddressLine1 = coreFactory.applicantData.PostalAddressLine1;
-       $scope.PostalAddressLine2 = coreFactory.applicantData.PostalAddressLine2;
-       $scope.PostalSuburb = coreFactory.applicantData.PostalSuburb;
-       $scope.PostalState = coreFactory.applicantData.PostalState;
-       $scope.PostalPostCode = parseInt(coreFactory.applicantData.PostalPostCode);
-       $scope.PreferredMailType = coreFactory.applicantData.PreferredMailType;
-       $scope.HasUSI = coreFactory.translateBoolean(coreFactory.applicantData.HasUSI);
-       $scope.USI = coreFactory.applicantData.USI;
-       $scope.HasConcessionCard = coreFactory.translateBoolean(coreFactory.applicantData.HasConcessionCard);
-       $scope.ConcessionCardType = coreFactory.applicantData.ConcessionCardType;
-       $scope.ConcessionCardNumber = coreFactory.applicantData.ConcessionCardNumber;
-       $scope.ConcessionCardName = coreFactory.applicantData.ConcessionCardName;
-       var dataConcessionCardExpiryDate = new Date(coreFactory.applicantData.ConcessionCardExpiryDate);
-       var ddConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getDate())>10? dataConcessionCardExpiryDate.getDate() :'0'+dataConcessionCardExpiryDate.getDate();
-       var mmConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getMonth())+1>10? dataConcessionCardExpiryDate.getMonth() :'0'+(parseInt(dataConcessionCardExpiryDate.getMonth())+1);
-       var yyyyConcessionCardExpiryDate = dataConcessionCardExpiryDate.getFullYear();
-       $scope.ConcessionCardExpiryDate = ddConcessionCardExpiryDate+'/'+mmConcessionCardExpiryDate+'/'+yyyyConcessionCardExpiryDate;
-       $(".ConcessionCardExpiryDate").datepicker("update", new Date(coreFactory.applicantData.ConcessionCardExpiryDate));
+       $scope.EmploymentStatus = coreFactory.applicantData.EmploymentStatus;
+       $scope.StillAttendSecondarySchool = coreFactory.translateDigit(coreFactory.applicantData.StillAttendSecondarySchool);
+       $scope.NameofSecondarySchool = coreFactory.applicantData.NameofSecondarySchool;
+       $scope.QLDSchoolLeaver = coreFactory.translateDigit(coreFactory.applicantData.QLDSchoolLeaver);
+       $scope.LUI = coreFactory.applicantData.LUI;
+       $scope.CompletedSchoolLevel = coreFactory.applicantData.CompletedSchoolLevel;
+       //console.log(new Date('01/01/'+coreFactory.applicantData.CompletedSchoolYear));
+       $(".schoolyear").datepicker(' update ', new Date('01/01/'+coreFactory.applicantData.CompletedSchoolYear));
+       $scope.CompletedSchoolYear = coreFactory.applicantData.CompletedSchoolYear;
+       $scope.UploadYear12Certification = coreFactory.translateDigit(coreFactory.applicantData.UploadYear12Certification);
+       $scope.CompletedFormalQualification = coreFactory.translateDigit(coreFactory.applicantData.CompletedFormalQualification);
+       $scope.QualificationAchieved = coreFactory.applicantData.QualificationAchieved;
+       $scope.QualificationTitleAchieved = coreFactory.applicantData.QualificationTitleAchieved;
+       $(".qualificationyear").datepicker("update", new Date('01/01/'+coreFactory.applicantData.QualificationAchievedYear));
+       $scope.QualificationAchievedYear = coreFactory.applicantData.QualificationAchievedYear;
+       $scope.QualificationType = coreFactory.applicantData.QualificationType;
+       $scope.EnrolledNationallyRecognizedCourse = coreFactory.translateDigit(coreFactory.applicantData.EnrolledNationallyRecognizedCourse);
+       $scope.CourseEnrolledIn = coreFactory.applicantData.CourseEnrolledIn;
+       $scope.QualificationTitle = coreFactory.applicantData.QualificationTitle;
+       $scope.Unemployed = coreFactory.translateDigit(coreFactory.translateDigit(coreFactory.applicantData.Unemployed));
+       $scope.EmployerLegalName = coreFactory.applicantData.EmployerLegalName;
+       $scope.EmployerTradingName = coreFactory.applicantData.EmployerTradingName;
+       $scope.EmployerAddress1 = coreFactory.applicantData.EmployerAddress1;
+       $scope.EmployerAddress2 = coreFactory.applicantData.EmployerAddress2;
+       $scope.EmployerSuburb = coreFactory.applicantData.EmployerSuburb;
+       $scope.EmployerState = coreFactory.applicantData.EmployerState;
+       $scope.EmployerPostcode = parseInt(coreFactory.applicantData.EmployerPostcode);
+       $scope.EmployerPhone = coreFactory.applicantData.EmployerPhone;
+       $scope.EmployerFax = coreFactory.applicantData.EmployerFax;
+       $scope.EmployerEmail = coreFactory.applicantData.EmployerEmail;
+       $scope.EmployerContactPerson = coreFactory.applicantData.EmployerContactPerson;
+       $scope.CurrentlyHasRelevantWork = coreFactory.translateBoolean(coreFactory.applicantData.CurrentlyHasRelevantWork);
+       $scope.HowLongWork = coreFactory.applicantData.HowLongWork;
+       $scope.CurrentPosition = coreFactory.applicantData.CurrentPosition;
+       $(".lastworkyear").datepicker("update", new Date('01/01/'+coreFactory.applicantData.WhenLastWork));
+       $scope.WhenLastWork = coreFactory.applicantData.WhenLastWork;
+       $scope.QLDChildcare = coreFactory.translateDigit(coreFactory.applicantData.QLDChildcare);
+       $scope.UploadBlueCard = coreFactory.translateDigit(coreFactory.applicantData.UploadBlueCard);
+       $scope.NSWChildcare = coreFactory.translateDigit(coreFactory.applicantData.NSWChildcare);
+       $scope.UploadChildrenCheck = coreFactory.translateDigit(coreFactory.applicantData.UploadChildrenCheck);
+       $scope.AgeCare = coreFactory.translateDigit(coreFactory.applicantData.AgeCare);
+       $scope.UploadCriminalHistoryCheck = coreFactory.translateDigit(coreFactory.applicantData.UploadCriminalHistoryCheck);
      }
      $scope.checkEmail = function(){
        this.EmployerEmailErr = !coreFactory.validateEmail(this.EmployerEmail);
@@ -79,124 +86,175 @@ angular.module('tlcApp')
        this.stepValidMsg = {};
        //init
        this.stepValid = true;
-       this.HasAgreeTermAtBeginningErr = false;
-       this.TitlesErr = false;
-       this.DateOfBirthErr = false;
-       this.GenderErr = false
-       this.MobilePhoneErr = false;
-       this.WorkPhoneErr = false;
-       this.HomeAddressLine1Err = false;
-       this.HomeSuburbErr = false;
-       this.HomePostCodeErr = false;
-       this.PostalAddressLine1Err = false;
-       this.PostalSuburbErr = false;
-       this.PostalPostCodeErr = false;
-       this.PreferredMailTypeErr = false;
-       this.HasUSIErr = false;
-       this.USIErr = false;
-       this.HasConcessionCardErr = false;
-       this.ConcessionCardNumberErr = false;
-       this.ConcessionCardNameErr = false;
-       this.ConcessionCardExpiryDateErr = false;
-       //validate step 1
-       if(coreFactory.translateBoolean(this.HasAgreeTermAtBeginning) === 0){
-         this.stepValidMsg['Agree terms:'] = "Please tick [Agree] terms";
-         this.HasAgreeTermAtBeginningErr = true;
+       this.EmploymentStatusErr = false;
+       this.StillAttendSecondarySchoolErr = false;
+       this.NameofSecondarySchoolErr = false;
+       this.QLDSchoolLeaverErr = false
+       this.LUIErr = false;
+       this.CompletedSchoolLevelErr = false;
+       this.UploadYear12CertificationErr = false;
+       this.CompletedFormalQualificationErr = false;
+       this.QualificationAchievedErr = false;
+       this.QualificationTitleAchievedErr = false;
+       this.QualificationAchievedYearErr = false;
+       this.QualificationTypeErr = false;
+       this.EnrolledNationallyRecognizedCourseErr = false;
+       this.CourseEnrolledInErr = false;
+       this.QualificationTitleErr = false;
+       this.UnemployedErr = false;
+       this.EmployerTradingNameErr = false;
+       this.EmployerAddressErr = false;
+       this.EmployerSuburbErr = false;
+       this.EmployerStateErr = false;
+       this.EmployerPostcodeErr = false;
+       this.EmployerPhoneErr = false;
+       this.EmployerEmailErr = false;
+       this.EmployerContactPersonErr = false;
+       this.CurrentlyHasRelevantWorkErr = false;
+       this.HowLongWorkErr = false;
+       this.CurrentPositionErr = false;
+       this.WhenLastWorkErr = false;
+       this.QLDChildcareErr = false;
+       this.UploadBlueCardErr = false;
+       this.NSWChildcareErr = false;
+       this.UploadChildrenCheckErr = false;
+       this.AgeCareErr = false;
+       this.UploadCriminalHistoryCheckErr = false;
+
+       //validate step 2
+       if(this.EmploymentStatus === undefined){
+         this.EmploymentStatusErr = true;
          this.stepValid = false;
        }
-       if(this.Title === undefined){
-         this.stepValidMsg['Title:'] = "Please select your [Title]";
-         this.TitlesErr = true;
+       if(this.StillAttendSecondarySchool === undefined){
+         this.StillAttendSecondarySchoolErr = true;
          this.stepValid = false;
        }
-       if(!coreFactory.UTCTime(this.DateOfBirth) || !coreFactory.ispastDate(this.DateOfBirth)){
-         this.stepValidMsg['DOB:'] = "Please select your [Date of Birth]";
-         this.DateOfBirthErr = true;
+       if(this.StillAttendSecondarySchool === "1" && (this.NameofSecondarySchool === undefined ||this.NameofSecondarySchool === '')){
+         this.NameofSecondarySchoolErr = true;
          this.stepValid = false;
        }
-       if(this.Gender === undefined){
-         this.stepValidMsg['Gender:'] = "Please select your [Gender]";
-         this.GenderErr = true;
+       if(this.QLDSchoolLeaver === undefined){
+         this.QLDSchoolLeaverErr = true;
          this.stepValid = false;
        }
-       if(this.MobilePhone === undefined || this.MobilePhone === ''){
-         this.stepValidMsg['MobilePhone:'] = "Please provide your [MobilePhone]";
-         this.MobilePhoneErr = true;
+       if(this.QLDSchoolLeaver === "1" && (this.LUI === undefined ||this.LUI === '')){
+         this.LUIErr = true;
          this.stepValid = false;
        }
-       if(this.WorkPhone === undefined || this.WorkPhone === ''){
-         this.stepValidMsg['WorkPhone:'] = "Please provide your [WorkPhone]";
-         this.WorkPhoneErr = true;
+       if(this.CompletedSchoolLevel === undefined){
+         this.CompletedSchoolLevelErr = true;
          this.stepValid = false;
        }
-       if(this.HomeAddressLine1 === undefined || this.HomeAddressLine1 === ''){
-         this.stepValidMsg['Home Address Line1:'] = "Please provide your [Home Address Line 1]";
-         this.HomeAddressLine1Err = true;
+       if(this.CompletedSchoolLevel === "1" && this.UploadYear12Certification !== true){
+         this.UploadYear12CertificationErr = true;
          this.stepValid = false;
        }
-       if(this.HomeSuburb === undefined || this.HomeSuburb === ''){
-         this.stepValidMsg['Home Suburb:'] = "Please provide your [Home Suburb]";
-         this.HomeSuburbErr = true;
+       if(this.CompletedFormalQualification === undefined){
+         this.CompletedFormalQualificationErr = true;
          this.stepValid = false;
        }
-       if(this.HomePostCode === undefined || this.HomePostCode === ''){
-         this.stepValidMsg['Home Postcode:'] = "Please provide your [Home Postcode]";
-         this.HomePostCodeErr = true;
+       if(this.CompletedFormalQualification === "1" && this.QualificationAchieved === undefined){
+         this.QualificationAchievedErr = true;
          this.stepValid = false;
        }
-       if(this.PostalAddressLine1 === undefined || this.PostalAddressLine1 === ''){
-         this.stepValidMsg['Postal Address Line1:'] = "Please provide your [Postal Address Line 1]";
-         this.PostalAddressLine1Err = true;
+       if(this.CompletedFormalQualification === "1" && (this.QualificationTitleAchieved === undefined || this.QualificationTitleAchieved === '')){
+         this.QualificationTitleAchievedErr = true;
          this.stepValid = false;
        }
-       if(this.PostalSuburb === undefined || this.PostalSuburb === ''){
-         this.stepValidMsg['Postal Suburb:'] = "Please provide your [Postal Suburb]";
-         this.PostalSuburbErr = true;
+       if(this.CompletedFormalQualification === "1" && (this.QualificationAchievedYear === undefined || this.QualificationAchievedYear === '' || coreFactory.isFutureYear(this.QualificationAchievedYear))){
+         this.QualificationAchievedYearErr = true;
          this.stepValid = false;
        }
-       if(this.PostalPostCode === undefined || this.PostalPostCode === ''){
-         this.stepValidMsg['Postal Postcode:'] = "Please provide your [Postal Postcode]";
-         this.PostalPostCodeErr = true;
+       if(this.CompletedFormalQualification === "1" && this.QualificationType === undefined){
+         this.QualificationTypeErr = true;
          this.stepValid = false;
        }
-       if(this.PreferredMailType === undefined){
-         this.stepValidMsg['Prefered Mail Type:'] = "Please provide your [Prefered Mail Type]";
-         this.PreferredMailTypeErr = true;
+       if(this.EnrolledNationallyRecognizedCourse === undefined){
+         this.EnrolledNationallyRecognizedCourseErr = true;
          this.stepValid = false;
        }
-       if(this.HasUSI === undefined){
-         this.stepValidMsg['Has USI:'] = "Please check if you have [USI]";
-         this.HasUSIErr = true;
+       if(this.EnrolledNationallyRecognizedCourse === "1" && this.CourseEnrolledIn === undefined){
+         this.CourseEnrolledInErr = true;
          this.stepValid = false;
        }
-       if(coreFactory.translateBoolean(this.HasUSI) === 1 && (this.USI === undefined || this.USI === '')){
-         this.stepValidMsg['USI:'] = "Please provide you [USI]";
-         this.USIErr = true;
+       if(this.EnrolledNationallyRecognizedCourse === "1" && (this.QualificationTitle === undefined || this.QualificationTitle === '')){
+         this.QualificationTitleErr = true;
          this.stepValid = false;
        }
-       if(this.HasConcessionCard === undefined){
-         this.stepValidMsg['Has Concession Card:'] = "Please check if you have [Concession Card]";
-         this.HasConcessionCardErr = true;
+       if(this.Unemployed === false && (this.EmployerTradingName === undefined || this.EmployerTradingName === '')){
+         this.EmployerTradingNameErr = true;
          this.stepValid = false;
        }
-       if(this.HasConcessionCard === '1' && (this.ConcessionCardNumber === undefined || this.ConcessionCardNumber === '')){
-         this.stepValidMsg['Concession Card Number:'] = "Please provide you [Concession Card Number]";
-         this.ConcessionCardNumberErr = true;
+       if(this.Unemployed === false && (this.EmployerAddress1 === undefined || this.EmployerAddress1 === '')){
+         this.EmployerAddress1Err = true;
          this.stepValid = false;
        }
-       if(this.HasConcessionCard === '1' && (this.ConcessionCardName === undefined || this.ConcessionCardName === '')){
-         this.stepValidMsg['Name on Card:'] = "Please provide you [Name on Card]";
-         this.ConcessionCardNameErr = true;
+       if(this.Unemployed === false && (this.EmployerSuburb === undefined || this.EmployerSuburb === '')){
+         this.EmployerSuburbErr = true;
          this.stepValid = false;
        }
-       if(this.HasConcessionCard === '1' && (!coreFactory.UTCTime(this.ConcessionCardExpiryDate) || coreFactory.ispastDate(this.ConcessionCardExpiryDate))){
-         this.stepValidMsg['Concession Card Expiry Date:'] = "Please check your [Concession Card Expiry Date]";
-         this.ConcessionCardExpiryDateErr = true;
+       if(this.Unemployed === false && (this.EmployerPostcode === undefined || this.EmployerPostcode === '')){
+         this.EmployerPostcodeErr = true;
          this.stepValid = false;
        }
+       if(this.Unemployed === false && (this.EmployerPhone === undefined || this.EmployerPhone === '')){
+         this.EmployerPhoneErr = true;
+         this.stepValid = false;
+       }
+       if(this.Unemployed === false && (this.EmployerEmail === undefined || this.EmployerEmail === '' || this.checkEmail())){
+         this.EmployerEmailErr = true;
+         this.stepValid = false;
+       }
+       if(this.Unemployed === false && (this.EmployerContactPerson === undefined || this.EmployerContactPerson === '')){
+         this.EmployerContactPersonErr = true;
+         this.stepValid = false;
+       }
+       if(this.CurrentlyHasRelevantWork === undefined){
+         this.CurrentlyHasRelevantWorkErr = true;
+         this.stepValid = false;
+       }
+       console.log(this.HowLongWork);
+       if(this.CurrentlyHasRelevantWork === '1' && (this.HowLongWork === undefined || this.HowLongWork === '')){
+         this.HowLongWorkErr = true;
+         this.stepValid = false;
+       }
+       if(this.CurrentlyHasRelevantWork === '1' && (this.CurrentPosition === undefined || this.CurrentPosition === '')){
+         this.CurrentPositionErr = true;
+         this.stepValid = false;
+       }
+       if(this.CurrentlyHasRelevantWork === '0' && (this.WhenLastWork === undefined || this.WhenLastWork === ''|| coreFactory.isFutureYear(this.WhenLastWork))){
+         this.WhenLastWorkErr = true;
+         this.stepValid = false;
+       }
+       if(this.QLDChildcare === undefined){
+         this.QLDChildcareErr = true;
+         this.stepValid = false;
+       }
+       if(this.QLDChildcare === '1' && this.UploadBlueCard === undefined){
+         this.UploadBlueCardErr = true;
+         this.stepValid = false;
+       }
+       if(this.NSWChildcare === undefined){
+         this.NSWChildcareErr = true;
+         this.stepValid = false;
+       }
+       if(this.NSWChildcare === '1' && this.UploadChildrenCheck === undefined){
+         this.UploadChildrenCheckErr = true;
+         this.stepValid = false;
+       }
+       if(this.AgeCare === undefined){
+         this.AgeCareErr = true;
+         this.stepValid = false;
+       }
+       if(this.AgeCare === '1' && this.UploadCriminalHistoryCheck === undefined){
+         this.UploadCriminalHistoryCheckErr = true;
+         this.stepValid = false;
+       }
+
        if(this.stepValid){
          //POST
-         var step3Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "EmploymentStatus": parseInt(this.EmploymentStatus), "StillAttendSecondarySchool": this.StillAttendSecondarySchool, "PreferredName": this.PreferredName, "NameofSecondarySchool": this.NameofSecondarySchool, "QLDSchoolLeaver": this.QLDSchoolLeaver, "LUI": this.LUI, "CompletedSchoolLevel": this.CompletedSchoolLevel, "CompletedSchoolYear": this.CompletedSchoolYear, "UploadYear12Certification": this.UploadYear12Certification, "CompletedFormalQual": this.CompletedFormalQual, "QualificationAchieved": this.QualificationAchieved, "QualificationTitleAchieved": this.QualificationTitleAchieved, "QualificationAchievedYear": this.QualificationAchievedYear, "QualificationType": this.QualificationType, "EnrolledNationallyRecognizedCourse": this.EnrolledNationallyRecognizedCourse, "CourseEnrolledIn": this.CourseEnrolledIn, "QualificationTitle": this.QualificationTitle, "Unemployed": this.Unemployed,"EmployerLegalName":this.EmployerLegalName, "EmployerTradingName": this.EmployerTradingName, "EmployerAddress1": this.EmployerAddress1, "EmployerAddress2": this.EmployerAddress2, "EmployerSuburb": this.EmployerSuburb, "EmployerState": parseInt(this.EmployerState), "EmployerPostcode": this.EmployerPostcode, "EmployerPhone": this.EmployerPhone, "EmployerFax": this.EmployerFax, "EmployerEmail": this.EmployerEmail,"EmployerContactPerson": this.EmployerContactPerson,"CurrentlyHasRelevantWork": this.CurrentlyHasRelevantWork,"HowLongWork": this.HowLongWork,"CurrentPosition": this.CurrentPosition,"WhenLastWork": this.WhenLastWork,"QLDChildcare": this.QLDChildcare,"UploadBlueCard": this.UploadBlueCard,"NSWChildcare": this.NSWChildcare,"UploadChildrenCheck": this.UploadChildrenCheck,"AgeCare": this.AgeCare,"UploadCriminalHistoryCheck": this.UploadCriminalHistoryCheck};
+         var step3Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "EmploymentStatus": this.EmploymentStatus, "StillAttendSecondarySchool": parseInt(this.StillAttendSecondarySchool), "NameofSecondarySchool": this.NameofSecondarySchool, "QLDSchoolLeaver": parseInt(this.QLDSchoolLeaver), "LUI": this.LUI, "CompletedSchoolLevel": parseInt(this.CompletedSchoolLevel), "CompletedSchoolYear": parseInt(this.CompletedSchoolYear), "UploadYear12Certification": parseInt(this.UploadYear12Certification), "CompletedFormalQualification": parseInt(this.CompletedFormalQualification), "QualificationAchieved": parseInt(this.QualificationAchieved), "QualificationTitleAchieved": this.QualificationTitleAchieved, "QualificationAchievedYear": this.QualificationAchievedYear, "QualificationType": parseInt(this.QualificationType), "EnrolledNationallyRecognizedCourse": parseInt(this.EnrolledNationallyRecognizedCourse), "CourseEnrolledIn": parseInt(this.CourseEnrolledIn), "QualificationTitle": this.QualificationTitle, "Unemployed": parseInt(this.Unemployed),"EmployerLegalName":this.EmployerLegalName, "EmployerTradingName": this.EmployerTradingName, "EmployerAddress1": this.EmployerAddress1, "EmployerAddress2": this.EmployerAddress2, "EmployerSuburb": this.EmployerSuburb, "EmployerState": parseInt(this.EmployerState), "EmployerPostcode": this.EmployerPostcode, "EmployerPhone": this.EmployerPhone, "EmployerFax": this.EmployerFax, "EmployerEmail": this.EmployerEmail,"EmployerContactPerson": this.EmployerContactPerson,"CurrentlyHasRelevantWork": parseInt(this.CurrentlyHasRelevantWork),"HowLongWork": this.HowLongWork,"CurrentPosition": this.CurrentPosition,"WhenLastWork": this.WhenLastWork,"QLDChildcare": parseInt(this.QLDChildcare),"UploadBlueCard": parseInt(this.UploadBlueCard),"NSWChildcare": parseInt(this.NSWChildcare),"UploadChildrenCheck": parseInt(this.UploadChildrenCheck),"AgeCare": parseInt(this.AgeCare),"UploadCriminalHistoryCheck": parseInt(this.UploadCriminalHistoryCheck)};
          coreFactory.postData(settingFactory.step3URL, step3Data, 'step3');
 
        }

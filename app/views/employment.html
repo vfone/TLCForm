@@ -3,9 +3,9 @@
   <h2>Employment</h2>
   <div class="section">
     <p>Of the following categories, which BEST describes your current employment status?  </p>
-    <div class="form-group control-group" ng-class="{'error':EmploymentStatuseErr }" >
+    <div class="form-group control-group" ng-class="{'error':EmploymentStatusErr }" >
       <label class="radio-inline halfwidth" ng-repeat="EmploymentStatus in EmploymentStatuses">
-        <input type="radio" ng-model="$parent.EmploymentStatus" value="{{EmploymentStatus.EmploymentStatuseId}}"> {{EmploymentStatus.EmploymentStatusDescription}}
+        <input type="radio" ng-model="$parent.EmploymentStatus" value="{{EmploymentStatus.EmploymentStatusId}}"> {{EmploymentStatus.EmploymentStatusDescription}}
       </label>
     </div>
   </div>
@@ -54,7 +54,7 @@
     <form class="form-inline">
       <div class="form-group control-group">
         <label for="CompletedSchoolYear">In which YEAR did you complete that school level (Optional)? </label>
-        <input type="text" schoolyear data-date-format="yyyy"  class="form-control schoolyear" ng-model="CompletedSchoolYear" >
+        <input type="text" schoolyear data-date-format="yyyy" data-date-min-view-mode="years" data-date-end-date="3d" class="form-control schoolyear" ng-model="CompletedSchoolYear" >
       </div>
     </form>
     <p>*If you completed Year 12 last year, we require a copy of your Year 12 Certificate as you may be eligible for the Year 12 Fee Free Training initiative (QLD Only).</p>
@@ -68,17 +68,17 @@
   </div>
   <h2>Completed Qualifications Achieved</h2>
   <div class="section">
-    <div class="form-group control-group" ng-class="{'error':QLDSchoolLeaverErr}" >
-      <label for="CompletedFormalQual">Have you successfully completed any formal qualifications? (Tick highest achievement only)</label>
+    <div class="form-group control-group" ng-class="{'error':CompletedFormalQualificationErr}" >
+      <label for="CompletedFormalQualification">Have you successfully completed any formal qualifications? (Tick highest achievement only)</label>
       <br/>
       <label class="radio-inline">
-        <input type="radio" ng-model="CompletedFormalQual" value="1"> Yes
+        <input type="radio" ng-model="CompletedFormalQualification" value="1"> Yes
       </label>
       <label class="radio-inline">
-        <input type="radio" ng-model="CompletedFormalQual" value="0"> No
+        <input type="radio" ng-model="CompletedFormalQualification" value="0"> No
       </label>
     </div>
-    <div ng-show="CompletedFormalQual==1" class="well">
+    <div ng-show="CompletedFormalQualification==1" class="well">
       <div class="form-group control-group" ng-class="{'error':QualificationAchievedErr}" >
         <label class="radio-inline halfwidth" ng-repeat="Qualification in Qualifications">
           <input type="radio" ng-model="$parent.QualificationAchieved" value="{{Qualification.QualificationId}}"> {{Qualification.QualificationName}}
@@ -86,15 +86,15 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group control-group" ng-class="{'error':QualificationAchievedErr}">
+          <div class="form-group control-group" ng-class="{'error':QualificationTitleAchievedErr}">
             <label for="QualificationTitleAchieved">What was the title/s of qualifications achieved? </label>
             <input type="text" class="form-control" ng-model="QualificationTitleAchieved" >
           </div>
         </div>
         <div class="col-md-6">
-          <div class="form-group control-group" ng-class="{'error':QualificationAchievedErr}">
+          <div class="form-group control-group" ng-class="{'error':QualificationAchievedYearErr}">
             <label for="QualificationAchievedYear">What year was your LAST qualification achieved? </label>
-            <input type="text" qualificationyear data-date-format="yyyy"  class="form-control qualificationyear" ng-model="QualificationAchievedYear" >
+            <input type="text" qualificationyear data-date-format="yyyy" data-date-min-view-mode="years"  class="form-control qualificationyear" ng-model="QualificationAchievedYear" >
           </div>
         </div>
       </div>
@@ -130,10 +130,10 @@
   </div>
   <h2>Employer Details</h2>
   <div class="section">
-    <div class="control-group" ng-class="{'error':UnemployedErr}" >
+    <div class="control-group">
       <div class="checkbox">
         <label>
-          <input type="checkbox" ng-model="Unemployed"> I’m currently unemployed.
+          <input type="checkbox" ng-model="Unemployed" ng-init="Unemployed=false"> I’m currently unemployed.
         </label>
       </div>
     </div>
@@ -146,13 +146,13 @@
         <label for="EmployerTradingName">Employer Trading Name</label>
         <input type="text" class="form-control" ng-model="EmployerTradingName">
       </div>
-      <div class="form-group control-group" ng-class="{'error':EmployerAddressLine1Err}">
-        <label for="EmployerAddressLine1">Address Line 1</label>
-        <input type="text" class="form-control" ng-model="EmployerAddressLine1">
+      <div class="form-group control-group" ng-class="{'error':EmployerAddress1Err}">
+        <label for="EmployerAddress1">Address Line 1</label>
+        <input type="text" class="form-control" ng-model="EmployerAddress1">
       </div>
       <div class="form-group">
-        <label for="EmployerAddressLine2">Address Line 2 (Optional)</label>
-        <input type="text" class="form-control" ng-model="EmployerAddressLine2">
+        <label for="EmployerAddress2">Address Line 2 (Optional)</label>
+        <input type="text" class="form-control" ng-model="EmployerAddress2">
       </div>
       <div class="row">
         <div class="col-md-6">
@@ -162,16 +162,16 @@
           </div>
         </div>
         <div class="col-md-3">
-          <div class="form-group control-group" ng-class="{'error':EmployerStateErr}">
+          <div class="form-group control-group" >
             <label for="EmployerState">State</label>
             <select class="form-control" ng-model="EmployerState" ng-options="state.StateId as state.StateName for state in States">
             </select>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="form-group control-group" ng-class="{'error':EmployerPostCodeErr}">
-            <label for="EmployerPostCode">Postcode</label>
-            <input type="number" class="form-control" ng-model="EmployerPostCode" onKeyDown="if(this.value.length==4) return false;">
+          <div class="form-group control-group" ng-class="{'error':EmployerPostcodeErr}">
+            <label for="EmployerPostcode">Postcode</label>
+            <input type="number" class="form-control" ng-model="EmployerPostcode" onKeyDown="if(this.value.length==4) return false;">
           </div>
         </div>
       </div>
@@ -219,7 +219,7 @@
       </label>
     </div>
 
-    <div class="well" ng-if="CurrentlyHasRelevantWork==1">
+    <div class="well" ng-show="CurrentlyHasRelevantWork==1">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group control-group" ng-class="{'error':HowLongWorkErr}">
@@ -235,11 +235,11 @@
         </div>
       </div>
     </div>
-    <div ng-if="CurrentlyHasRelevantWork==0" class="well">
+    <div ng-show="CurrentlyHasRelevantWork==0" class="well">
         <form class="form-inline">
           <div class="form-group control-group" ng-class="{'error':WhenLastWorkErr}">
             <label for="WhenLastWork"> When was the last time you worked in the industry? </label>
-            <input type="text" lastworkyear data-date-format="yyyy"  class="form-control lastworkyear" ng-model="WhenLastWork" >
+            <input type="text" lastworkyear data-date-format="yyyy" data-date-min-view-mode="years"  class="form-control lastworkyear" ng-model="WhenLastWork" >
           </div>
         </form>
         <p>N.B Please be aware all courses require practicum placement. If you are not currently employed in the industry relevant to the course you will be studying, you will need to find a suitable service to be able to complete this requirement before competency can be awarded. </p>

@@ -29,8 +29,20 @@ core.service('coreService', function($rootScope, $http, settingFactory) {
   this.print = function(){
     window.print();
   };
-
-
+  this.sendingWindow = function(isSending){
+    if(isSending){
+      if(parseInt(window.innerHeight)>parseInt($('html').height())){
+        $('#sendingWindow').height(window.innerHeight).find('img').css('margin-top','20%');
+      }
+      else{
+        $('#sendingWindow').height($('html').height()).find('img').css('margin-top','80%');
+      }
+      $('#sendingWindow').show();
+    }
+    else{
+      $('#sendingWindow').hide();
+    }
+  };
 
   this.modalWindow = function(action, modalCls, modalTitle, modalbody, modalClick, modalButton, modalButtonShow){
     $rootScope.coreService = this;
@@ -67,7 +79,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
   };
   coreFn.parseURLPara = function(key){
     return  window.location.href.split(key+'=')[1];
-  }
+  };
   coreFn.ispastDate = function(date){
     try{
       if(coreFn.parseDate(date)){
@@ -85,7 +97,6 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
     catch(e){
       return true; //invalid date format, set blocker
     }
-
   };
   coreFn.isFutureYear = function(year){
     var currentYear = new Date().getFullYear();
@@ -154,6 +165,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
     console.log(postURL);
     console.log('POSTING DATA:');
     console.log(data);
+    coreService.sendingWindow(true);
     var promise = $http({
       method: 'POST',
       url: postURL,
@@ -171,17 +183,19 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
         //recovery: request reset password, expect an email to be sent
         //reset: update user password expect return OK with Applicant Data or NOT OK;
         //postform: submit form data expect return OK or NOT OK;
-
+        coreService.sendingWindow(false);
         console.log(res);
         if(res === 'NOTOK'){
           $rootScope.isOK = false;
         }
         else{
           $rootScope.isOK = true;
+          coreFn.applicantData = res;
+          coreService.setLocalStorage('applicantData',coreService.StringifyJSON(res));
           console.log(ev);
           if(ev == 'login' || ev == 'create' || ev == 'reset'){
             coreFn.applicantData = res;
-            //coreService.m('applicantData',coreService.StringifyJSON(res));
+            coreService.setLocalStorage('applicantData',coreService.StringifyJSON(res));
             $rootScope.isVerified = true;
             $location.path('/personal');
           }
@@ -204,6 +218,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
         return res;
     }).
     error(function(data, status, headers, config) {
+        coreService.sendingWindow(false);
         data = data!==null?data:{'Message':'Connection failed!'};
         if(ev == 'login' || ev == 'create' || ev == 'reset'){
           $rootScope.isVerified = false;

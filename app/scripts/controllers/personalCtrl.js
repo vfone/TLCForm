@@ -25,6 +25,9 @@ angular.module('tlcApp')
      $scope.ConcessionCardType = $scope.ConcessionCards[0].ConcessionCardId;
      $scope.stepValid = true;
      $scope.stepValidMsg = {};
+     if($.isEmptyObject(coreFactory.applicantData)){
+       coreFactory.applicantData = coreService.ParseJSON(coreService.getLocalStorage('applicantData'));
+     }
      if(coreFactory.applicantData.ApplicantId){
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
        $scope.HasAgreeTermAtBeginning = coreFactory.translateDigit(coreFactory.applicantData.HasAgreeTermAtBeginning);

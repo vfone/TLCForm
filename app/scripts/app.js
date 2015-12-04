@@ -71,8 +71,9 @@ angular
         require: 'ngModel',
         link: function (scope, el, attr, ngModel) {
             $(el).datepicker({
-                format: 'yyyy',
+                format: ' yyyy',
                 startView: "years",
+                viewMode: "years",
                 minViewMode: "years",
                 autoclose: true
             });
@@ -84,11 +85,15 @@ angular
         require: 'ngModel',
         link: function (scope, el, attr, ngModel) {
             $(el).datepicker({
-                format: 'yyyy',
+                format: ' yyyy',
                 startView: "years",
+                viewMode: "years",
                 minViewMode: "years",
+                maxViewMode: "years",
                 autoclose: true
-            });
+            }).on('changeDate', function(e){
+                $(this).datepicker('hide');
+            });;
         }
     };
   })
@@ -97,8 +102,9 @@ angular
         require: 'ngModel',
         link: function (scope, el, attr, ngModel) {
             $(el).datepicker({
-                format: 'yyyy',
+                format: ' yyyy',
                 startView: "years",
+                viewMode: "years",
                 minViewMode: "years",
                 autoclose: true
             });
