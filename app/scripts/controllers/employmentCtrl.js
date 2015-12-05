@@ -8,7 +8,7 @@
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
-   .controller('EmploymentCtrl', function ($rootScope, $scope, $location, settingFactory, coreService, coreFactory) {
+   .controller('EmploymentCtrl', function ($rootScope, $scope, $location, $window, settingFactory, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
      if(!$rootScope.isVerified){
        //if user not verifed, redirect to login page
@@ -251,12 +251,11 @@ angular.module('tlcApp')
          this.UploadCriminalHistoryCheckErr = true;
          this.stepValid = false;
        }
-
+       $('body').scrollTop(0);
        if(this.stepValid){
          //POST
          var step3Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "EmploymentStatus": this.EmploymentStatus, "StillAttendSecondarySchool": parseInt(this.StillAttendSecondarySchool), "NameofSecondarySchool": this.NameofSecondarySchool, "QLDSchoolLeaver": parseInt(this.QLDSchoolLeaver), "LUI": this.LUI, "CompletedSchoolLevel": parseInt(this.CompletedSchoolLevel), "CompletedSchoolYear": parseInt(this.CompletedSchoolYear), "UploadYear12Certification": parseInt(this.UploadYear12Certification), "CompletedFormalQualification": parseInt(this.CompletedFormalQualification), "QualificationAchieved": parseInt(this.QualificationAchieved), "QualificationTitleAchieved": this.QualificationTitleAchieved, "QualificationAchievedYear": this.QualificationAchievedYear, "QualificationType": parseInt(this.QualificationType), "EnrolledNationallyRecognizedCourse": parseInt(this.EnrolledNationallyRecognizedCourse), "CourseEnrolledIn": parseInt(this.CourseEnrolledIn), "QualificationTitle": this.QualificationTitle, "Unemployed": parseInt(coreFactory.translateBoolean(this.Unemployed)),"EmployerLegalName":this.EmployerLegalName, "EmployerTradingName": this.EmployerTradingName, "EmployerAddress1": this.EmployerAddress1, "EmployerAddress2": this.EmployerAddress2, "EmployerSuburb": this.EmployerSuburb, "EmployerState": parseInt(this.EmployerState), "EmployerPostcode": this.EmployerPostcode, "EmployerPhone": this.EmployerPhone, "EmployerFax": this.EmployerFax, "EmployerEmail": this.EmployerEmail,"EmployerContactPerson": this.EmployerContactPerson,"CurrentlyHasRelevantWork": parseInt(this.CurrentlyHasRelevantWork),"HowLongWork": this.HowLongWork,"CurrentPosition": this.CurrentPosition,"WhenLastWork": this.WhenLastWork,"QLDChildcare": parseInt(this.QLDChildcare),"UploadBlueCard": parseInt(this.UploadBlueCard),"NSWChildcare": parseInt(this.NSWChildcare),"UploadChildrenCheck": parseInt(this.UploadChildrenCheck),"AgeCare": parseInt(this.AgeCare),"UploadCriminalHistoryCheck": parseInt(this.UploadCriminalHistoryCheck)};
          coreFactory.postData(settingFactory.step3URL, step3Data, 'step3');
-
        }
      }
 });

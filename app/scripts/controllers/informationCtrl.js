@@ -8,7 +8,7 @@
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
-   .controller('InformationCtrl', function ($rootScope, $scope, $location, settingFactory, coreService, coreFactory) {
+   .controller('InformationCtrl', function ($rootScope, $scope, $location, $window, settingFactory, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
      if(!$rootScope.isVerified){
        //if user not verifed, redirect to login page
@@ -46,10 +46,10 @@ angular.module('tlcApp')
        $scope.Disability = coreFactory.translateBoolean(coreFactory.applicantData.Disability);
        if(coreFactory.applicantData.DisabilityParts !== undefined){
          $scope.DisabilityParts.arr = coreFactory.applicantData.DisabilityParts;
-         console.log($scope.DisabilityParts.arr);
+         //console.log($scope.DisabilityParts.arr);
          for(var n = 0; n < $scope.DisabilityParts.arr.length; n++){
            var key = $scope.DisabilityParts.arr[n];
-           console.log(key);
+           //console.log(key);
            $scope.DisabilityParts.ids[key] = true;
          }
        }
@@ -157,7 +157,8 @@ angular.module('tlcApp')
         this.HeardAboutUsErr = true;
         this.stepValid = false;
       }
-      this.stepValid = true;
+      
+      $('body').scrollTop(0);
        if(this.stepValid){
          //POST
          var step4Data = {'PassKey': settingFactory.passKey, 'ApplicantId': this.ApplicantId, 'CountryofBirth': parseInt(this.CountryofBirth), 'CityofBirth': this.CityofBirth, 'Aboriginal': parseInt(this.Aboriginal), 'Origin': parseInt(this.Origin), 'SpeakOtherLanguage': parseInt(this.SpeakOtherLanguage), 'LanguageOtherEnglish': this.LanguageOtherEnglish, 'EnglishProficiency': parseInt(this.EnglishProficiency), 'HoldVisa': parseInt(this.HoldVisa), 'VisaType': parseInt(this.VisaType), 'OtherVisaType': this.OtherVisaType, 'UploadVisa': parseInt(coreFactory.translateBoolean(this.UploadVisa)), 'Disability': parseInt(this.Disability), 'DisabilityParts': this.DisabilityParts.arr, 'ApplyDAAWSFunding': parseInt(this.ApplyDAAWSFunding), 'EmergencyContactName': this.EmergencyContactName, 'EmergencyContactRelationship': this.EmergencyContactRelationship, 'EmergencyContactMobile': this.EmergencyContactMobile, 'EmergencySecondContactNo': this.EmergencySecondContactNo, 'EmergencyAdditionalContact': this.AdditionalEmergencyContactName, 'AdditionalEmergencyContactRelationship': this.AdditionalEmergencyContactRelationship, 'AdditionalEmergencyContactMobile': this.AdditionalEmergencyContactMobile, 'AddEmergSecondContactNo': this.AdditionalEmergencySecondContactNo,'DoctorName': this.DoctorName,'DoctorPhone':this.DoctorPhone, 'PreferredHospital': this.PreferredHospital, 'HeardAboutUs': parseInt(this.HeardAboutUs), 'OtherHeardAboutUs': this.OtherHeardAboutUs};

@@ -1,5 +1,10 @@
 <div class="form-step">
   <h1>Personal &amp; Contact Details</h1>
+  <div class="section"  ng-show='!stepValid'>
+    <div class="alert alert-danger"  role="alert">
+      <h5>Sorry, filed in <span>red</span> needs attention!</h5>
+    </div>
+  </div>
   <div class="section">
     <p>INSTRUCTIONS FOR STUDENTS: Please ensure you complete every question. This information is required to complete assessment of your eligibility for training and / or funding. We will also use this document to complete your enrolment should you be offered
       and accept enrolment. Please call our office if you have any questions at any time. Once we receive the completed pre-enrolment application, we will call you to discuss the application and the next step in getting you started in your chosen course.</p>
@@ -240,11 +245,7 @@
       </div>
     </div>
   </div>
-  <div class="section"  ng-show='!stepValid'>
-    <div class="alert alert-danger"  role="alert">
-      <h5>Sorry, required info missing!</h5>
-    </div>
-  </div>
+
   <div class="bottomCtrl clearfix">
       <a class="btn btn-primary pull-right" ng-click="next()" role="button">Next</a>
   </div>

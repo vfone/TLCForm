@@ -8,7 +8,7 @@
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
-   .controller('CourseCtrl', function ($rootScope, $scope, $location, settingFactory, coreService, coreFactory) {
+   .controller('CourseCtrl', function ($rootScope, $scope, $location, $window, settingFactory, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
 
      if(!$rootScope.isVerified){
@@ -32,10 +32,10 @@ angular.module('tlcApp')
        $scope.CourseID = coreFactory.applicantData.CourseID;
        if(coreFactory.applicantData.ModeOfStudy !== undefined){
          $scope.ModeOfStudyList.arr = coreFactory.applicantData.ModeOfStudy;
-         console.log($scope.ModeOfStudyList.arr);
+         //console.log($scope.ModeOfStudyList.arr);
          for(var n = 0; n < $scope.ModeOfStudyList.arr.length; n++){
            var key = $scope.ModeOfStudyList.arr[n];
-           console.log(key);
+           //console.log(key);
            $scope.ModeOfStudyList.ids[key] = true;
          }
        }
@@ -106,7 +106,7 @@ angular.module('tlcApp')
          this.stepValid = false;
        }
 
-
+       $('body').scrollTop(0);
        if(this.stepValid){
          //POST
          console.log('PassYear10English', this.PassYear10English);
@@ -114,7 +114,6 @@ angular.module('tlcApp')
          var step5Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "CourseID": parseInt(this.CourseID), "ModeOfStudy": this.ModeOfStudyList.arr, "ApplyRPL": parseInt(this.ApplyRPL), "ApplyCreditTransfer": parseInt(this.ApplyCreditTransfer), "StudyReason": parseInt(this.StudyReason), "OtherStudyReason": this.OtherStudyReason, "PassYear10English": parseInt(coreFactory.translateBoolean(this.PassYear10English)), "CompleteEnglishTest": parseInt(coreFactory.translateBoolean(this.CompleteEnglishTest)), "IELTSScore": this.IELTSScore};
          console.log(step5Data);
          coreFactory.postData(settingFactory.step5URL, step5Data, 'step5');
-
        }
      }
 });

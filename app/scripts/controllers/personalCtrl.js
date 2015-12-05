@@ -8,7 +8,7 @@
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
-   .controller('PersonalCtrl', function ($rootScope, $scope, $location, settingFactory, coreService, coreFactory) {
+   .controller('PersonalCtrl', function ($rootScope, $scope, $location, settingFactory, $window, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
      if(!$rootScope.isVerified){
        //if user not verifed, redirect to login page
@@ -210,6 +210,7 @@ angular.module('tlcApp')
          this.ConcessionCardExpiryDateErr = true;
          this.stepValid = false;
        }
+       $('body').scrollTop(0);
        if(this.stepValid){
          //POST
          var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "HasAgreeTermAtBeginning": parseInt(coreFactory.translateBoolean(this.HasAgreeTermAtBeginning)), "Title": parseInt(this.Title), "PreferredName": this.PreferredName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": parseInt(this.Gender), "HomePhone": this.HomePhone, "MobilePhone": this.WorkPhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": parseInt(this.HomeState), "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": parseInt(this.PostalState), "PostalPostCode": this.PostalPostCode,"PreferredMailType":parseInt(this.PreferredMailType), "HasUSI": parseInt(this.HasUSI), "USI": this.USI, "USIAuthorise": parseInt(this.USIAuthorise), "HasConcessionCard": parseInt(this.HasConcessionCard), "ConcessionCardType": parseInt(this.ConcessionCardType), "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};

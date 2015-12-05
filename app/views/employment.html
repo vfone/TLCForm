@@ -1,5 +1,8 @@
 <div class="form-step">
   <h1>Employment, Qualification &amp; Education</h1>
+  <div class="alert alert-danger"  role="alert">
+    <h5>Sorry, filed in <span>red</span> needs attention!</h5>
+  </div>
   <h2>Employment</h2>
   <div class="section">
     <p>Of the following categories, which BEST describes your current employment status?  </p>
@@ -335,11 +338,6 @@
       </div>
     </div>
 
-  </div>
-  <div class="section"  ng-show='!stepValid'>
-    <div class="alert alert-danger"  role="alert">
-      <h5>Sorry, required info missing!</h5>
-    </div>
   </div>
   <div class="bottomCtrl">
       <a class="btn btn-default" ng-click="prev()" role="button">Prev</a>
