@@ -11,8 +11,8 @@
   </div>
   <div class="loginForm" ng-if="isSignIn" ng-hide="isResetURL"><!--Sign In Form-->
     <div class="inner">
-      <div class="alert alert-success alert-dismissible" ng-show="resetSent" ng-init="resetSent=false" role="alert">
-        <button type="button" class="close" ng-click="resetSent=false" aria-label="Close"><span >&times;</span></button>
+      <div class="alert alert-success alert-dismissible" ng-show="$root.resetSent" ng-init="$root.resetSent=false" role="alert">
+        <button type="button" class="close" ng-click="$root.resetSent=false" aria-label="Close"><span >&times;</span></button>
         An email has been sent, please check to reset your password.
       </div>
       <div class="alert alert-danger alert-dismissible" ng-show="!$root.isOK" role="alert">
@@ -22,19 +22,19 @@
       <div class="control-group" ng-class="{'error':!isEmailValid}" ng-init="isEmailValid=true">
         <label for="UserId">Email address</label>
         <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div> -->
-        <input type="text" class="form-control" id="UserId" ng-model="UserId = 'vfone.four@gmail.com'" ng-blur="checkEmail()" placeholder="yourname@email.com" >
+        <input type="text" class="form-control" id="UserId" ng-model="UserId" ng-blur="checkEmail()" placeholder="yourname@email.com" >
       </div>
-      <div class="control-group" ng-hide="showLostPwdBtn">
+      <div class="control-group" ng-hide="$root.showLostPwdBtn">
         <label for="Password">Password</label>
         <!-- <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div> -->
-        <input type="password" class="form-control" id="Password" ng-model="Password = '123456Aa'" maxlength="10" placeholder="**********" >
+        <input type="password" class="form-control" id="Password" ng-model="Password" maxlength="10" placeholder="**********" >
       </div>
 
-      <a class="btn btn-primary btn-signin" ng-click="fnSignin()" role="button" ng-hide="showLostPwdBtn">Log In</a>
-      <a class="btn btn-link btn-lostpwd" ng-click="showLostPwdBtn=true; $root.isOK=true" ng-init="showLostPwdBtn=false" role="button" ng-hide="showLostPwdBtn">Lost password?</a>
-      <div class="row">
-        <div class="col-md-8"><a class="btn btn-danger btn-signin" ng-click="fnRecovery()" role="button" ng-show="showLostPwdBtn">Recovery</a></div>
-        <div class="col-md-4"><a class="btn btn-default btn-signin" ng-click="showLostPwdBtn=false" role="button" ng-show="showLostPwdBtn">Cancel</a></div>
+      <a class="btn btn-primary btn-signin" ng-click="fnSignin()" role="button" ng-hide="$root.showLostPwdBtn">Log In</a>
+      <a class="btn btn-link btn-lostpwd" ng-click="$root.showLostPwdBtn=true; $root.isOK=true" ng-init="$root.showLostPwdBtn=false" role="button" ng-hide="$root.showLostPwdBtn">Lost password?</a>
+      <div class="row" ng-show="$root.showLostPwdBtn">
+        <div class="col-md-8"><a class="btn btn-danger btn-signin" ng-click="fnRecovery()" role="button">Recovery</a></div>
+        <div class="col-md-4"><a class="btn btn-default btn-signin" ng-click="showLostPwdBtn=false" role="button">Cancel</a></div>
       </div>
     </div>
   </div>

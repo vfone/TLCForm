@@ -1,240 +1,91 @@
 <div class="form-step">
   <h1>Course Selection</h1>
   <div class="section">
-    <p>INSTRUCTIONS FOR STUDENTS: Please ensure you complete every question. This information is required to complete assessment of your eligibility for training and / or funding. We will also use this document to complete your enrolment should you be offered
-      and accept enrolment. Please call our office if you have any questions at any time. Once we receive the completed pre-enrolment application, we will call you to discuss the application and the next step in getting you started in your chosen course.</p>
-    <p>Before applying to enrol TLC Training Solutions, please make sure you read the following:</p>
-    <ul class="listCheck">
-      <li>Refund Policy and Procedure</li>
-      <li>Pre-Enrolment Agreement</li>
-      <li>Student Code of Conduct</li>
-      <li>Student Handbook </li>
-      <li>Course Guide</li>
-    </ul>
-    <div class="control-group" ng-class="{'error':HasAgreeTermAtBeginningErr}" >
+    <div class="form-group control-group" ng-class="{'error':CourseErr}" >
+      <label for="Course">Please refer to the Course Guide for full details of course outline, pathways, entry requirements and duration. Details also available at <a href="www.tlctrainingsolutions.com.au" target="_blank">www.tlctrainingsolutions.com.au</a>  </label>
+        <label class="radio-inline fullwidth" ng-repeat="Course in Courses ">
+          <input type="radio" ng-model="$parent.CourseID" value="{{Course.CourseId}}"> {{Course.CourseName}}
+        </label>
+    </div>
+  </div>
+  <h2>Mode of Study</h2>
+  <div class="section">
+    <div class="form-group control-group" ng-class="{'error':StudyOfModeErr}" >
+      <label for="StudyOfMode">Please refer to the Course Guide for full details of study modes and funding opportunities. Course Guide and Details are also available at <a href="www.tlctrainingsolutions.com.au" target="_blank">www.tlctrainingsolutions.com.au</a>  </label>
+      <br/>
+      <div class="row section">
+        <div class="col-md-6" ng-repeat="StudyMode in StudyModes">
+          <label class="checkbox" for="{{StudyMode.StudyModeId}}">
+            <input type="checkbox" ng-model="ModeOfStudyList.ids[StudyMode.StudyModeId]" name="group" id="{{StudyMode.StudyModeId}}" />
+            {{StudyMode.StudyModeDescription}}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2>Recognition of Prior Learning (RPL) and Credit Transfer </h2>
+  <div class="section">
+    <div class="form-group control-group" ng-class="{'error':ApplyRPLErr}">
+      <label for="ApplyRPL">I wish to apply for RPL (refer to course guide and RPL Candidate Application for information on RPL)</label>
+      <br/>
+      <label class="radio-inline">
+        <input type="radio" ng-model="ApplyRPL" value="1"> Yes
+      </label>
+      <label class="radio-inline">
+        <input type="radio" ng-model="ApplyRPL" value="0"> No
+      </label>
+      <p ng-show="ApplyRPL==1">I understand I need to complete the ‘RPL Candidate Application Form’ (PDF form LINK will be advised)</p>
+    </div>
+    <div class="form-group control-group" ng-class="{'error':ApplyCreditTransferErr}">
+      <label for="ApplyCreditTransfer">I wish to apply for Credit Transfer (refer to course guide for information on credit transfers)</label>
+      <br/>
+      <label class="radio-inline">
+        <input type="radio" ng-model="ApplyCreditTransfer" value="1"> Yes
+      </label>
+      <label class="radio-inline">
+        <input type="radio" ng-model="ApplyCreditTransfer" value="0"> No
+      </label>
+      <p ng-show="ApplyCreditTransfer==1">I have attached a certified copy of my Statement of Attainment</p>
+    </div>
+  </div>
+  <h2>Study Reason</h2>
+  <div class="section">
+    <div class="form-group control-group" ng-class="{'error':StudyReasonErr}">
+      <label for="StudyReason">Of the following categories which BEST describes your main reason for undertaking this course / traineeship </label>
+      <br/>
+      <label class="radio-inline halfwidth" ng-repeat="StudyReason in StudyReasons ">
+        <input type="radio" ng-model="$parent.StudyReason" value="{{StudyReason.StudyReasonId}}"> {{StudyReason.StudyReasonName}}
+      </label>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-6">
+          <div class="form-group control-group" ng-class="{'error':OtherStudyReasonErr}" >
+          	<input type="text"  class="form-control " ng-model="OtherStudyReason" ng-show="StudyReason==10" placeholder="please specify">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2>Language, Literacy and Numeracy</h2>
+  <div class="section">
+    <p>All students are required to complete a language, literacy and numeracy assessment prior to entry into a course. This will be done later as part of your actual enrolment. The purpose of this test is to determine whether you may require additional support in order to complete the course successfully. </p>
+    <p>To assist us in determining what level of LLN support (if any) you may require please answer the below. This way, we can tell you prior to your enrolment if we are able to provide the level of support you require or if you might need to seek support from external agencies.</p>
+    <div class="control-group" ng-class="{'error':PassYear10EnglishErr}" >
       <div class="checkbox">
         <label>
-          <input type="checkbox" ng-model="HasAgreeTermAtBeginning"> I have read through the policies and agree the terms.
+          <input type="checkbox" ng-model="PassYear10English"> I have achieved a pass in year 10 English or equivalent
         </label>
       </div>
     </div>
-  </div>
-  <h2>Personal Details</h2>
-  <div class="section">
-    <div class="form-group control-group" ng-class="{'error':TitlesErr}" >
-      <label for="Titles">Title</label>
-      <br/>
-      <label class="radio-inline" ng-repeat="title in Titles">
-        <input type="radio" ng-model="$parent.Title" value="{{title.TitleId}}"> {{title.TitleName}}
-      </label>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="FamilyName">Surname</label>
-          <input type="text" class="form-control" ng-model="FamilyName" disabled>
-        </div>
+    <div class="control-group" ng-class="{'error':CompleteEnglishTestErr}" >
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="CompleteEnglishTest"> I have completed an English proficiency test
+        </label>
       </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="GivenName">Legal Given Name/s</label>
-          <input type="text" class="form-control" ng-model="GivenName" disabled>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="PreferredName">Preferred Name(optional)</label>
-          <input type="text" class="form-control" ng-model="PreferredName">
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group control-group" ng-class="{'error':DateOfBirthErr}">
-          <label for="DateOfBirth">Date of Birth (dd/mm/yyyy)</label>
-          <input type="text" dob class="form-control DateOfBirth" data-date-format="mm/dd/yyyy" ng-model="DateOfBirth">
-        </div>
-      </div>
-    </div>
-    <div class="form-group control-group" ng-class="{'error':GenderErr}">
-      <label for="Gender">Gender</label>
-      <br/>
-      <label class="radio-inline" ng-repeat="gender in Genders">
-        <input type="radio" ng-model="$parent.Gender" value="{{gender.GenderId}}"> {{gender.GenderDescription}}
-      </label>
-    </div>
-  </div>
-  <h2>Contact Details</h2>
-  <div class="section">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="HomePhone">Home Phone(optional)</label>
-          <input type="text" class="form-control" ng-model="HomePhone">
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group control-group" ng-class="{'error':MobilePhoneErr}">
-          <label for="MobilePhone">Mobile Phone</label>
-          <input type="text" class="form-control" ng-model="MobilePhone">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group control-group" ng-class="{'error':WorkPhoneErr}">
-          <label for="WorkPhone">Work Phone</label>
-          <input type="text" class="form-control" ng-model="WorkPhone">
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="UserId">Email Address</label>
-          <input type="text" class="form-control" ng-model="UserId" disabled>
-        </div>
-      </div>
-    </div>
-  </div>
-  <h2>Address</h2>
-  <div class="section">
-    <h3>What is the address of where you usually live?</h3>
-    <div class="form-group control-group" ng-class="{'error':HomeAddressLine1Err}">
-      <label for="HomeAddressLine1">Address Line 1</label>
-      <input type="text" class="form-control" ng-model="HomeAddressLine1">
-    </div>
-    <div class="form-group">
-      <label for="HomeAddressLine2">Address Line 2</label>
-      <input type="text" class="form-control" ng-model="HomeAddressLine2">
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group control-group" ng-class="{'error':HomeSuburbErr}">
-          <label for="HomeSuburb" >Suburb, Locality or Town</label>
-          <input type="text"  class="form-control " ng-model="HomeSuburb">
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group control-group" ng-class="{'error':HomeStateErr}">
-          <label for="HomeState">State</label>
-          <select class="form-control" ng-model="HomeState" ng-options="state.StateId as state.StateName for state in States">
-          </select>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group control-group" ng-class="{'error':HomePostCodeErr}">
-          <label for="HomePostCode">Postcode</label>
-          <input type="number" class="form-control" ng-model="HomePostCode" onKeyDown="if(this.value.length==4) return false;">
-        </div>
-      </div>
-    </div>
-    <h3>What is your postal address?
-      <span class="pull-right"><input type="checkbox" ng-click="sameAddress()" ng-model="isSameAddress" ng-init="isSameAddress = false" > As Above</span>
-    </h3>
-    <div class="form-group control-group" ng-class="{'error':PostalAddressLine1Err}">
-      <label for="PostalAddressLine1">Address Line 1</label>
-      <input type="text" class="form-control" ng-model="PostalAddressLine1">
-    </div>
-    <div class="form-group">
-      <label for="PostalAddressLine2">Address Line 2</label>
-      <input type="text" class="form-control" ng-model="PostalAddressLine2">
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group control-group" ng-class="{'error':PostalSuburbErr}">
-          <label for="PostalSuburb">Suburb, Locality or Town</label>
-          <input type="text" class="form-control" ng-model="PostalSuburb">
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group control-group" ng-class="{'error':PostalStateErr}">
-          <label for="PostalState">State</label>
-          <select class="form-control" ng-model="PostalState" ng-options="state.StateId as state.StateName for state in States">
-          </select>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group control-group" ng-class="{'error':PostalPostCodeErr}">
-          <label for="PostalPostCode">Postcode</label>
-          <input type="number" class="form-control" ng-model="PostalPostCode" onKeyDown="if(this.value.length==4) return false;">
-        </div>
-      </div>
-    </div>
-    <div class="form-group control-group" ng-class="{'error':PreferredMailTypeErr}">
-      <h3>Please indicate how you would like to receive correspondence from TLC?</h3>
-
-      <label class="radio-inline">
-        <input type="radio" ng-model="PreferredMailType" value="1"> Email
-      </label>
-      <label class="radio-inline">
-        <input type="radio" ng-model="PreferredMailType" value="2"> Mail
-      </label>
-    </div>
-  </div>
-  <h2>Unique Student Identifier (USI)</h2>
-  <div class="section">
-    <p>From January 1, 2015 all learners studying nationally recognised training in Australia are required to have a Unique Student Identifier.</p>
-    <div class="form-group control-group" ng-class="{'error':HasUSIErr}">
-      <h3>Do you have a Unique Student Identifier?</h3>
-
-      <label class="radio-inline">
-        <input type="radio" ng-model="HasUSI" value="1"> Yes
-      </label>
-      <label class="radio-inline">
-        <input type="radio" ng-model="HasUSI" value="0"> No
-      </label>
-    </div>
-    <form class="form-inline well" ng-show="HasUSI==1">
-      <div class="form-group control-group" ng-class="{'error':USIErr}">
-        <label for="USI">USI&nbsp;&nbsp;</label>
-        <input type="text" class="form-control" maxlength="10" ng-model="USI" >
-      </div>
-    </form>
-    <div class="well" ng-show="HasUSI==0">
-      <p>If you do not have a USI, you can apply at www.usi.gov.au. You must ensure you use your legal name ) in all areas – USI application, enrolment form etc. and that it matches all ID provided.</p>
-      <p>TLC can apply to the Student Identifiers register on your behalf for a USI. You will however be required to complete an authority form enabling us to do so. </p>
-      <label><input type="checkbox" ng-model="USIAuthorise"> I authorise TLC to apply and have completed and submitted the completed authority form with my application to enrol.</span>
-    </div>
-
-  </div>
-  <h2>Concession Card</h2>
-  <div class="section">
-    <div class="form-group control-group" ng-class="{'error':HasConcessionCardErr}">
-      <h3>Do you have a concession card? An eligible concession card is a Health Care or Pensioner Concession Card held by you, or your partner or guardian as long as you are named on the card. </h3>
-      <label class="radio-inline">
-        <input type="radio" ng-model="HasConcessionCard" value="1"> Yes
-      </label>
-      <label class="radio-inline">
-        <input type="radio" ng-model="HasConcessionCard" value="0"> No
-      </label>
-    </div>
-    <div ng-show="HasConcessionCard==1" class="well">
-      <p>Complete details below. N.B. Your concession card MUST be available to sight at enrolment.</p>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group control-group" ng-class="{'error':ConcessionCardTypeErr}">
-            <label for="ConcessionCardType">Type of Card</label>
-            <select class="form-control" ng-model="ConcessionCardType" ng-options="concessioncard.ConcessionCardId as concessioncard.ConcessionCardName for concessioncard in ConcessionCards">
-            </select>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group control-group" ng-class="{'error':ConcessionCardNumberErr}">
-            <label for="ConcessionCardNumber">Card number</label>
-            <input type="text" class="form-control" maxlength="10" ng-model="ConcessionCardNumber" >
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group control-group" ng-class="{'error':ConcessionCardNameErr}">
-            <label for="ConcessionCardName">Name on card</label>
-            <input type="text" class="form-control" ng-model="ConcessionCardName" >
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group control-group" ng-class="{'error':ConcessionCardExpiryDateErr}">
-            <label for="ConcessionCardExpiryDate">Expiry Date</label>
-            <input type="text" expirydate class="form-control ConcessionCardExpiryDate" ng-model="ConcessionCardExpiryDate" >
+      <div class="row" ng-show="CompleteEnglishTest==true">
+        <div class="col-md-4">
+          <div class="form-group control-group" ng-class="{'error':IELTSScoreErr}" >
+          	My IELTS Score is <input type="text"  class="form-control " ng-model="IELTSScore">
           </div>
         </div>
       </div>
@@ -246,6 +97,7 @@
     </div>
   </div>
   <div class="bottomCtrl clearfix">
+      <a class="btn btn-default" ng-click="prev()" role="button">Prev</a>
       <a class="btn btn-primary pull-right" ng-click="next()" role="button">Next</a>
   </div>
 </div>

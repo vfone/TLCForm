@@ -12,10 +12,10 @@ angular.module('tlcApp')
      $scope.coreFactory = coreFactory;
      if(!$rootScope.isVerified){
        //if user not verifed, redirect to login page
-       //$location.path('/');
+       $location.path('/');
      }
      $scope.lookupData = coreService.ParseJSON(coreService.getLocalStorage('lookupData'));
-     console.log($scope.lookupData);
+     //console.log($scope.lookupData);
      $scope.EmploymentStatuses = $scope.lookupData.EmploymentStatuses;
      $scope.CompletedSchoolYears= $scope.lookupData.CompletedSchoolYears;
      $scope.Qualifications = $scope.lookupData.Qualifications;
@@ -31,28 +31,28 @@ angular.module('tlcApp')
        coreFactory.applicantData = coreService.ParseJSON(coreService.getLocalStorage('applicantData'));
      }
      if(coreFactory.applicantData.ApplicantId){
-       console.log(coreFactory.applicantData);
+       //console.log(coreFactory.applicantData);
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
        $scope.EmploymentStatus = coreFactory.applicantData.EmploymentStatus;
-       $scope.StillAttendSecondarySchool = coreFactory.translateDigit(coreFactory.applicantData.StillAttendSecondarySchool);
+       $scope.StillAttendSecondarySchool = coreFactory.translateBoolean(coreFactory.applicantData.StillAttendSecondarySchool);
        $scope.NameofSecondarySchool = coreFactory.applicantData.NameofSecondarySchool;
-       $scope.QLDSchoolLeaver = coreFactory.translateDigit(coreFactory.applicantData.QLDSchoolLeaver);
+       $scope.QLDSchoolLeaver = coreFactory.translateBoolean(coreFactory.applicantData.QLDSchoolLeaver);
        $scope.LUI = coreFactory.applicantData.LUI;
        $scope.CompletedSchoolLevel = coreFactory.applicantData.CompletedSchoolLevel;
        //console.log(new Date('01/01/'+coreFactory.applicantData.CompletedSchoolYear));
        $(".schoolyear").datepicker(' update ', new Date('01/01/'+coreFactory.applicantData.CompletedSchoolYear));
        $scope.CompletedSchoolYear = coreFactory.applicantData.CompletedSchoolYear;
-       $scope.UploadYear12Certification = coreFactory.translateDigit(coreFactory.applicantData.UploadYear12Certification);
-       $scope.CompletedFormalQualification = coreFactory.translateDigit(coreFactory.applicantData.CompletedFormalQualification);
+       $scope.UploadYear12Certification = coreFactory.translateBoolean(coreFactory.applicantData.UploadYear12Certification);
+       $scope.CompletedFormalQualification = coreFactory.translateBoolean(coreFactory.applicantData.CompletedFormalQualification);
        $scope.QualificationAchieved = coreFactory.applicantData.QualificationAchieved;
        $scope.QualificationTitleAchieved = coreFactory.applicantData.QualificationTitleAchieved;
        $(".qualificationyear").datepicker("update", new Date('01/01/'+coreFactory.applicantData.QualificationAchievedYear));
        $scope.QualificationAchievedYear = coreFactory.applicantData.QualificationAchievedYear;
        $scope.QualificationType = coreFactory.applicantData.QualificationType;
-       $scope.EnrolledNationallyRecognizedCourse = coreFactory.translateDigit(coreFactory.applicantData.EnrolledNationallyRecognizedCourse);
+       $scope.EnrolledNationallyRecognizedCourse = coreFactory.translateBoolean(coreFactory.applicantData.EnrolledNationallyRecognizedCourse);
        $scope.CourseEnrolledIn = coreFactory.applicantData.CourseEnrolledIn;
        $scope.QualificationTitle = coreFactory.applicantData.QualificationTitle;
-       $scope.Unemployed = coreFactory.translateDigit(coreFactory.translateDigit(coreFactory.applicantData.Unemployed));
+       $scope.Unemployed = coreFactory.applicantData.Unemployed;
        $scope.EmployerLegalName = coreFactory.applicantData.EmployerLegalName;
        $scope.EmployerTradingName = coreFactory.applicantData.EmployerTradingName;
        $scope.EmployerAddress1 = coreFactory.applicantData.EmployerAddress1;
@@ -69,12 +69,12 @@ angular.module('tlcApp')
        $scope.CurrentPosition = coreFactory.applicantData.CurrentPosition;
        $(".lastworkyear").datepicker("update", new Date('01/01/'+coreFactory.applicantData.WhenLastWork));
        $scope.WhenLastWork = coreFactory.applicantData.WhenLastWork;
-       $scope.QLDChildcare = coreFactory.translateDigit(coreFactory.applicantData.QLDChildcare);
-       $scope.UploadBlueCard = coreFactory.translateDigit(coreFactory.applicantData.UploadBlueCard);
-       $scope.NSWChildcare = coreFactory.translateDigit(coreFactory.applicantData.NSWChildcare);
-       $scope.UploadChildrenCheck = coreFactory.translateDigit(coreFactory.applicantData.UploadChildrenCheck);
-       $scope.AgeCare = coreFactory.translateDigit(coreFactory.applicantData.AgeCare);
-       $scope.UploadCriminalHistoryCheck = coreFactory.translateDigit(coreFactory.applicantData.UploadCriminalHistoryCheck);
+       $scope.QLDChildcare = coreFactory.translateBoolean(coreFactory.applicantData.QLDChildcare);
+       $scope.UploadBlueCard = coreFactory.translateBoolean(coreFactory.applicantData.UploadBlueCard);
+       $scope.NSWChildcare = coreFactory.translateBoolean(coreFactory.applicantData.NSWChildcare);
+       $scope.UploadChildrenCheck = coreFactory.translateBoolean(coreFactory.applicantData.UploadChildrenCheck);
+       $scope.AgeCare = coreFactory.translateBoolean(coreFactory.applicantData.AgeCare);
+       $scope.UploadCriminalHistoryCheck = coreFactory.translateBoolean(coreFactory.applicantData.UploadCriminalHistoryCheck);
      }
      $scope.checkEmail = function(){
        this.EmployerEmailErr = !coreFactory.validateEmail(this.EmployerEmail);
@@ -214,7 +214,7 @@ angular.module('tlcApp')
          this.CurrentlyHasRelevantWorkErr = true;
          this.stepValid = false;
        }
-       console.log(this.HowLongWork);
+       //console.log(this.HowLongWork);
        if(this.CurrentlyHasRelevantWork === '1' && (this.HowLongWork === undefined || this.HowLongWork === '')){
          this.HowLongWorkErr = true;
          this.stepValid = false;
@@ -254,7 +254,7 @@ angular.module('tlcApp')
 
        if(this.stepValid){
          //POST
-         var step3Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "EmploymentStatus": this.EmploymentStatus, "StillAttendSecondarySchool": parseInt(this.StillAttendSecondarySchool), "NameofSecondarySchool": this.NameofSecondarySchool, "QLDSchoolLeaver": parseInt(this.QLDSchoolLeaver), "LUI": this.LUI, "CompletedSchoolLevel": parseInt(this.CompletedSchoolLevel), "CompletedSchoolYear": parseInt(this.CompletedSchoolYear), "UploadYear12Certification": parseInt(this.UploadYear12Certification), "CompletedFormalQualification": parseInt(this.CompletedFormalQualification), "QualificationAchieved": parseInt(this.QualificationAchieved), "QualificationTitleAchieved": this.QualificationTitleAchieved, "QualificationAchievedYear": this.QualificationAchievedYear, "QualificationType": parseInt(this.QualificationType), "EnrolledNationallyRecognizedCourse": parseInt(this.EnrolledNationallyRecognizedCourse), "CourseEnrolledIn": parseInt(this.CourseEnrolledIn), "QualificationTitle": this.QualificationTitle, "Unemployed": parseInt(this.Unemployed),"EmployerLegalName":this.EmployerLegalName, "EmployerTradingName": this.EmployerTradingName, "EmployerAddress1": this.EmployerAddress1, "EmployerAddress2": this.EmployerAddress2, "EmployerSuburb": this.EmployerSuburb, "EmployerState": parseInt(this.EmployerState), "EmployerPostcode": this.EmployerPostcode, "EmployerPhone": this.EmployerPhone, "EmployerFax": this.EmployerFax, "EmployerEmail": this.EmployerEmail,"EmployerContactPerson": this.EmployerContactPerson,"CurrentlyHasRelevantWork": parseInt(this.CurrentlyHasRelevantWork),"HowLongWork": this.HowLongWork,"CurrentPosition": this.CurrentPosition,"WhenLastWork": this.WhenLastWork,"QLDChildcare": parseInt(this.QLDChildcare),"UploadBlueCard": parseInt(this.UploadBlueCard),"NSWChildcare": parseInt(this.NSWChildcare),"UploadChildrenCheck": parseInt(this.UploadChildrenCheck),"AgeCare": parseInt(this.AgeCare),"UploadCriminalHistoryCheck": parseInt(this.UploadCriminalHistoryCheck)};
+         var step3Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "EmploymentStatus": this.EmploymentStatus, "StillAttendSecondarySchool": parseInt(this.StillAttendSecondarySchool), "NameofSecondarySchool": this.NameofSecondarySchool, "QLDSchoolLeaver": parseInt(this.QLDSchoolLeaver), "LUI": this.LUI, "CompletedSchoolLevel": parseInt(this.CompletedSchoolLevel), "CompletedSchoolYear": parseInt(this.CompletedSchoolYear), "UploadYear12Certification": parseInt(this.UploadYear12Certification), "CompletedFormalQualification": parseInt(this.CompletedFormalQualification), "QualificationAchieved": parseInt(this.QualificationAchieved), "QualificationTitleAchieved": this.QualificationTitleAchieved, "QualificationAchievedYear": this.QualificationAchievedYear, "QualificationType": parseInt(this.QualificationType), "EnrolledNationallyRecognizedCourse": parseInt(this.EnrolledNationallyRecognizedCourse), "CourseEnrolledIn": parseInt(this.CourseEnrolledIn), "QualificationTitle": this.QualificationTitle, "Unemployed": parseInt(coreFactory.translateBoolean(this.Unemployed)),"EmployerLegalName":this.EmployerLegalName, "EmployerTradingName": this.EmployerTradingName, "EmployerAddress1": this.EmployerAddress1, "EmployerAddress2": this.EmployerAddress2, "EmployerSuburb": this.EmployerSuburb, "EmployerState": parseInt(this.EmployerState), "EmployerPostcode": this.EmployerPostcode, "EmployerPhone": this.EmployerPhone, "EmployerFax": this.EmployerFax, "EmployerEmail": this.EmployerEmail,"EmployerContactPerson": this.EmployerContactPerson,"CurrentlyHasRelevantWork": parseInt(this.CurrentlyHasRelevantWork),"HowLongWork": this.HowLongWork,"CurrentPosition": this.CurrentPosition,"WhenLastWork": this.WhenLastWork,"QLDChildcare": parseInt(this.QLDChildcare),"UploadBlueCard": parseInt(this.UploadBlueCard),"NSWChildcare": parseInt(this.NSWChildcare),"UploadChildrenCheck": parseInt(this.UploadChildrenCheck),"AgeCare": parseInt(this.AgeCare),"UploadCriminalHistoryCheck": parseInt(this.UploadCriminalHistoryCheck)};
          coreFactory.postData(settingFactory.step3URL, step3Data, 'step3');
 
        }

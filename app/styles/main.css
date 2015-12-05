@@ -125,6 +125,10 @@ body {
   width:50%;
   margin-left: 0;
 }
+.form-step label.fullwidth{
+  width:80%;
+  margin-left: 0;
+}
 .bottomCtrl{
   background-color: rgba(43,193,241,0.2);
   padding: 20px;

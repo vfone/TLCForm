@@ -62,13 +62,15 @@ core.service('coreService', function($rootScope, $http, settingFactory) {
   };
 });
 
-core.factory('coreFactory', function($rootScope, $location, $http, $route, shareData, coreService, settingFactory) {
+core.factory('coreFactory', function($rootScope, $location, $http, $route, coreService, settingFactory) {
   var coreFn = {};
   coreFn.lookupData = {}; //lookup data for form fields
   coreFn.applicantData = {}; //return applicant's data
   $rootScope.isVerified = false; //if userid and password verified
   $rootScope.isOK = true; //return res from post
   $rootScope.isSent = false; //if recovery password sent
+  $rootScope.showLostPwdBtn = true;
+  $rootScope.resetSent = false;
   coreFn.validateEmail = function(email){
     var re = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     return(re.test(email));
@@ -123,7 +125,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
   };
   coreFn.translateBoolean = function(res){
     var translated = '0';
-    if(res){
+    if(res===true){
       translated = '1';
     }
     return translated;
@@ -144,7 +146,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
   }
   //get Lookup data
   coreFn.fetchData = function(apiURL){
-    console.log(apiURL);
+
     $http({method: 'GET', url: apiURL,
       format:'json'
     }).
@@ -153,7 +155,6 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
     }).
     error(function(data, status, headers, config) {
       console.log("data loading failed");
-
       coreService.modalWindow('show', 'modalErrorWindow', 'Sorry, connection seems down!', 'The connect is current unavaiable, please try it again.', 'click', 'Button Text', false);
     }).then(function() {
 
@@ -161,10 +162,10 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
   };
   coreFn.postData = function(postURL, data, ev){
     var res = true;
-    console.log('POSTING URL:');
-    console.log(postURL);
-    console.log('POSTING DATA:');
-    console.log(data);
+    // console.log('POSTING URL:');
+    // console.log(postURL);
+    // console.log('POSTING DATA:');
+    // console.log(data);
     coreService.sendingWindow(true);
     var promise = $http({
       method: 'POST',
@@ -184,7 +185,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
         //reset: update user password expect return OK with Applicant Data or NOT OK;
         //postform: submit form data expect return OK or NOT OK;
         coreService.sendingWindow(false);
-        console.log(res);
+        //console.log(res);
         if(res === 'NOTOK'){
           $rootScope.isOK = false;
         }
@@ -192,15 +193,16 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
           $rootScope.isOK = true;
           coreFn.applicantData = res;
           coreService.setLocalStorage('applicantData',coreService.StringifyJSON(res));
-          console.log(ev);
           if(ev == 'login' || ev == 'create' || ev == 'reset'){
             coreFn.applicantData = res;
-            coreService.setLocalStorage('applicantData',coreService.StringifyJSON(res));
             $rootScope.isVerified = true;
             $location.path('/personal');
           }
           else if(ev == 'recovery'){
             $rootScope.isSent = true;
+            $rootScope.showLostPwdBtn = false;
+            $rootScope.resetSent = true;
+            $rootScope.$broadcast('recoverySent');
           }
         }
         if(ev == 'step2'){
@@ -213,7 +215,8 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
           $location.path('/course');
         }
         if(ev == 'step5'){
-          window.location = settingFactory.uploadFile;
+          coreService.removeLocalStorage('applicantData');
+          window.location = settingFactory.uploadFile + coreFn.applicantData.ApplicantId;
         }
         return res;
     }).
@@ -224,7 +227,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, share
           $rootScope.isVerified = false;
         }
         else if(ev == 'recovery'){
-          coreFn.isSent = false;
+          $rootScope.isSent = false;
         }
         coreService.modalWindow('show', 'modalErrorWindow', 'Oooops, something went wrong', data.Message + ' Please try it again.', 'click', 'Button Text', false);
     }).

@@ -8,11 +8,11 @@
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
-   .controller('LoginCtrl', function ($rootScope, $scope, $route, $location, settingFactory, coreService, coreFactory) {
+   .controller('LoginCtrl', function ($rootScope, $scope, $route, $location, $timeout, settingFactory, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
      //check if current URL is an reset URL
      $scope.isResetURL = false;
-     $scope.token = coreFactory.parseURLPara('token');
+     $scope.token = coreFactory.parseURLPara('tokenid');
      $scope.isOK = $rootScope.isOK;
      if($scope.token){
        $scope.isResetURL = true;
@@ -22,11 +22,16 @@ angular.module('tlcApp')
      }
      //get lookupData
      coreFactory.fetchData(settingFactory.lookupURL);
-
      $scope.fnSignin = function(){
-       var signinData = {"PassKey": settingFactory.passKey, "UserId": this.UserId, "Password": this.Password};
-       //post to step1a for signin
-       coreFactory.postData(settingFactory.loginURL, signinData, 'login');
+       if(this.UserId===undefined || this.UserId==='' ||this.Password===undefined || this.Password===''){
+         $rootScope.isOK = false;
+       }
+       else{
+         var signinData = {"PassKey": settingFactory.passKey, "UserId": this.UserId, "Password": this.Password};
+         //post to step1a for signin
+         coreFactory.postData(settingFactory.loginURL, signinData, 'login');
+       }
+
      };
      $scope.fnSignup = function(){
        var signupData = {"PassKey": settingFactory.passKey, "GivenName": this.GivenName, "FamilyName": this.FamilyName, "Email": this.UserId, "Password": this.Password};
@@ -38,10 +43,7 @@ angular.module('tlcApp')
        var recoveryData = {"PassKey": settingFactory.passKey, "UserId": this.UserId};
        //post to step1 for signup
        coreFactory.postData(settingFactory.recoveryURL, recoveryData, 'recovery');
-       if($rootScope.isSent){
-         this.showLostPwdBtn = false;
-         this.resetSent = true;
-       }
+       
      };
      $scope.fnReset = function(){
        var resetData = {"PassKey": settingFactory.passKey, "Token": this.token, "Password": this.ResetPassword};
@@ -53,7 +55,6 @@ angular.module('tlcApp')
      }
      $scope.checkPassword = function(){
        this.isPasswordValid = coreFactory.validatePassword(this.Password);
-       console.log(this.Password + ' is ' + this.isPasswordValid);
      }
      $scope.checkResetPassword = function(){
        this.isResetPasswordValid = coreFactory.validatePassword(this.ResetPassword);
