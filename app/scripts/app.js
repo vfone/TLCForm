@@ -39,10 +39,10 @@ angular
         templateUrl: 'views/course.html',
         controller: 'CourseCtrl',
         controllerAs: 'course'
+      })
+      .otherwise({
+        redirectTo: '/'
       });
-      // .otherwise({
-      //   redirectTo: '/'
-      // });
   })
   .directive('dob', function () {
     return {
