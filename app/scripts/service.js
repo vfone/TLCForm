@@ -31,12 +31,6 @@ core.service('coreService', function($rootScope, $http, settingFactory) {
   };
   this.sendingWindow = function(isSending){
     if(isSending){
-      if(parseInt(window.innerHeight)>parseInt($('html').height())){
-        $('#sendingWindow').height(window.innerHeight).find('img').css('margin-top','20%');
-      }
-      else{
-        $('#sendingWindow').height($('html').height()).find('img').css('margin-top','80%');
-      }
       $('#sendingWindow').show();
     }
     else{
