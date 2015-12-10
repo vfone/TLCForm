@@ -1,8 +1,16 @@
+<ul class="progressStep clearfix">
+  <li class="active">Personal and Contact Details</li>
+  <li class="dueline">Employment, Qualification &amp; Education</li>
+  <li>Other Information</li>
+  <li>Course Selection</li>
+</ul>
+
+
 <div class="form-step">
   <h1>Personal &amp; Contact Details</h1>
   <div class="section"  ng-show='!stepValid'>
     <div class="alert alert-danger"  role="alert">
-      <h5>Sorry, filed in <span>red</span> needs attention!</h5>
+      <h5>Sorry, fields in <span>red</span> needs attention!</h5>
     </div>
   </div>
   <div class="section">
@@ -57,7 +65,7 @@
       <div class="col-md-6">
         <div class="form-group control-group" ng-class="{'error':DateOfBirthErr}">
           <label for="DateOfBirth">Date of Birth (dd/mm/yyyy)</label>
-          <input type="text" dob class="form-control DateOfBirth" data-date-format="mm/dd/yyyy" ng-model="DateOfBirth">
+          <input type="text" dob class="form-control DateOfBirth" data-date-format="mm/dd/yyyy" data-date-end-date="0d" ng-model="DateOfBirth">
         </div>
       </div>
     </div>
@@ -239,7 +247,7 @@
         <div class="col-md-6">
           <div class="form-group control-group" ng-class="{'error':ConcessionCardExpiryDateErr}">
             <label for="ConcessionCardExpiryDate">Expiry Date</label>
-            <input type="text" expirydate class="form-control ConcessionCardExpiryDate" ng-model="ConcessionCardExpiryDate" >
+            <input type="text" expirydate class="form-control ConcessionCardExpiryDate" data-date-start-date="0d" ng-model="ConcessionCardExpiryDate" >
           </div>
         </div>
       </div>
@@ -247,6 +255,15 @@
   </div>
 
   <div class="bottomCtrl clearfix">
-      <a class="btn btn-primary pull-right" ng-click="next()" role="button">Next</a>
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-2">
+          <a class="btn btn-primary" ng-click="next()" role="button">Save &amp; Continue</a>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-danger" ng-click="logout()" role="button">Logout</a>
+        </div>
+    </div>
   </div>
 </div>

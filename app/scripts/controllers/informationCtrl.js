@@ -40,7 +40,7 @@ angular.module('tlcApp')
        $scope.LanguageOtherEnglish = coreFactory.applicantData.LanguageOtherEnglish;
        $scope.EnglishProficiency = coreFactory.applicantData.EnglishProficiency;
        $scope.HoldVisa = coreFactory.translateBoolean(coreFactory.applicantData.HoldVisa);
-       $scope.VisaType = coreFactory.applicantData.VisaType;
+       $scope.VisaType = (coreFactory.applicantData.VisaType).toString();
        $scope.OtherVisaType = coreFactory.applicantData.OtherVisaType;
        $scope.UploadVisa = coreFactory.translateBoolean(coreFactory.applicantData.UploadVisa);
        $scope.Disability = coreFactory.translateBoolean(coreFactory.applicantData.Disability);
@@ -72,6 +72,15 @@ angular.module('tlcApp')
      $scope.prev = function(){
        $location.path('/employment');
      }
+     $scope.logout = function(){
+       var isLogout = confirm('Are you sure you want to log out?');
+       if(isLogout){
+         $rootScope.isVerified == false;
+         coreService.removeLocalStorage('lookupData');
+         coreService.removeLocalStorage('applicantData')
+         $location.path('/');
+       }
+     };
      $scope.next = function(){
        this.stepValidMsg = {};
        //init
@@ -129,6 +138,7 @@ angular.module('tlcApp')
          this.OtherVisaTypeErr = true;
          this.stepValid = false;
        }
+       console.log(this.OtherVisaTypeErr);
        if(this.HoldVisa === '1' && coreFactory.translateBoolean(this.UploadVisa) === '0'){
          this.UploadVisaErr = true;
          this.stepValid = false;
@@ -157,7 +167,7 @@ angular.module('tlcApp')
         this.HeardAboutUsErr = true;
         this.stepValid = false;
       }
-      
+
       $('body').scrollTop(0);
        if(this.stepValid){
          //POST

@@ -1,8 +1,14 @@
+<ul class="progressStep clearfix">
+  <li>Personal and Contact Details</li>
+  <li class="dueline">Employment, Qualification &amp; Education</li>
+  <li class="active">Other Information</li>
+  <li>Course Selection</li>
+</ul>
 <div class="form-step">
   <h1>Other Information</h1>
   <div class="section"  ng-show='!stepValid'>
     <div class="alert alert-danger"  role="alert">
-      <h5>Sorry, filed in <span>red</span> needs attention!</h5>
+      <h5>Sorry, fields in <span>red</span> needs attention!</h5>
     </div>
   </div>
   <h2>Language and Cultural Diversity</h2>
@@ -218,7 +224,16 @@
     </div>
   </div>
   <div class="bottomCtrl clearfix">
-      <a class="btn btn-default" ng-click="prev()" role="button">Prev</a>
-      <a class="btn btn-primary pull-right" ng-click="next()" role="button">Next</a>
+    <div class="row">
+        <div class="col-md-8">
+          <a class="btn btn-default" ng-click="prev()" role="button">Prev</a>
+        </div>
+        <div class="col-md-2">
+          <a class="btn btn-primary" ng-click="next()" role="button">Save &amp; Continue</a>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-danger" ng-click="logout()" role="button">Logout</a>
+        </div>
+    </div>
   </div>
 </div>

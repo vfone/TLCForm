@@ -92,6 +92,40 @@ body {
   padding:20px;
 }
 /*LOGIN STYLE ENDS*/
+ul.progressStep {
+  padding:0;
+  background: transparent;
+  box-shadow: none;
+}
+ul.progressStep li{
+  width:25%;
+  box-sizing: border-box;
+  display: inline-block;
+  background: rgba(0,0,0,0.7);
+  color:#ffffff;
+  float:left;
+  min-height: 65px;
+  padding: 10px 10px;
+  font-size: 15px;
+  line-height: 45px;
+  text-align: center;
+  border-right:1px solid rgba(0,0,0,0.2);
+}
+ul.progressStep li.dueline{
+  line-height: 100%;
+  padding-top: 20px;
+}
+ul.progressStep li:first-child{
+  border-radius: 3px 0 0 3px;
+}
+ul.progressStep li:last-child{
+  border-radius: 0 3px 3px 0;
+}
+ul.progressStep li.active{
+  background: rgba(183,205,54,1);
+  color:#ffffff;
+  box-shadow:1px 3px 5px rgba(0,0,0,0.2) inset;
+}
 /*FORM STEP STYLE*/
 .form-step{
   background-color: rgba(255,255,255,0.4);

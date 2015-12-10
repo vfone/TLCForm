@@ -91,6 +91,15 @@ angular.module('tlcApp')
          this.PostalPostCode = '';
        }
      };
+     $scope.logout = function(){
+       var isLogout = confirm('Are you sure you want to log out?');
+       if(isLogout){
+         $rootScope.isVerified == false;
+         coreService.removeLocalStorage('lookupData');
+         coreService.removeLocalStorage('applicantData')
+         $location.path('/');
+       }
+     };
      $scope.next = function(){
        this.stepValidMsg = {};
        //init
@@ -125,6 +134,7 @@ angular.module('tlcApp')
          this.TitlesErr = true;
          this.stepValid = false;
        }
+       console.log(this.DateOfBirth, coreFactory.ispastDate(this.DateOfBirth))
        if(!coreFactory.UTCTime(this.DateOfBirth) || !coreFactory.ispastDate(this.DateOfBirth)){
          this.stepValidMsg['DOB:'] = "Please select your [Date of Birth]";
          this.DateOfBirthErr = true;
@@ -180,12 +190,13 @@ angular.module('tlcApp')
          this.PreferredMailTypeErr = true;
          this.stepValid = false;
        }
+
        if(this.HasUSI === undefined){
          this.stepValidMsg['Has USI:'] = "Please check if you have [USI]";
          this.HasUSIErr = true;
          this.stepValid = false;
        }
-       if(coreFactory.translateBoolean(this.HasUSI) === '1' && (this.USI === undefined || this.USI === '')){
+       if(this.HasUSI === '1' && (this.USI === undefined || this.USI === '')){
          this.stepValidMsg['USI:'] = "Please provide you [USI]";
          this.USIErr = true;
          this.stepValid = false;

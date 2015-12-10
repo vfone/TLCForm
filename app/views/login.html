@@ -34,7 +34,7 @@
       <a class="btn btn-link btn-lostpwd" ng-click="$root.showLostPwdBtn=true; $root.isOK=true" ng-init="$root.showLostPwdBtn=false" role="button" ng-hide="$root.showLostPwdBtn">Lost password?</a>
       <div class="row" ng-show="$root.showLostPwdBtn">
         <div class="col-md-8"><a class="btn btn-danger btn-signin" ng-click="fnRecovery()" role="button">Recovery</a></div>
-        <div class="col-md-4"><a class="btn btn-default btn-signin" ng-click="showLostPwdBtn=false" role="button">Cancel</a></div>
+        <div class="col-md-4"><a class="btn btn-default btn-signin" ng-click="$root.showLostPwdBtn=false" role="button">Cancel</a></div>
       </div>
     </div>
   </div>

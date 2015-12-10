@@ -51,6 +51,15 @@ angular.module('tlcApp')
      $scope.prev = function(){
        $location.path('/information');
      }
+     $scope.logout = function(){
+       var isLogout = confirm('Are you sure you want to log out?');
+       if(isLogout){
+         $rootScope.isVerified == false;
+         coreService.removeLocalStorage('lookupData');
+         coreService.removeLocalStorage('applicantData')
+         $location.path('/');
+       }
+     };
      $scope.next = function(){
        this.stepValidMsg = {};
        //init

@@ -40,13 +40,13 @@ angular.module('tlcApp')
        $scope.LUI = coreFactory.applicantData.LUI;
        $scope.CompletedSchoolLevel = coreFactory.applicantData.CompletedSchoolLevel;
        //console.log(new Date('01/01/'+coreFactory.applicantData.CompletedSchoolYear));
-       $(".schoolyear").datepicker(' update ', new Date('01/01/'+coreFactory.applicantData.CompletedSchoolYear));
+       $(".schoolyear").datepicker('update', new Date('01/01/'+coreFactory.applicantData.CompletedSchoolYear));
        $scope.CompletedSchoolYear = coreFactory.applicantData.CompletedSchoolYear;
        $scope.UploadYear12Certification = coreFactory.translateBoolean(coreFactory.applicantData.UploadYear12Certification);
        $scope.CompletedFormalQualification = coreFactory.translateBoolean(coreFactory.applicantData.CompletedFormalQualification);
        $scope.QualificationAchieved = coreFactory.applicantData.QualificationAchieved;
        $scope.QualificationTitleAchieved = coreFactory.applicantData.QualificationTitleAchieved;
-       $(".qualificationyear").datepicker("update", new Date('01/01/'+coreFactory.applicantData.QualificationAchievedYear));
+       $(".qualificationyear").datepicker('update', new Date('01/01/'+coreFactory.applicantData.QualificationAchievedYear));
        $scope.QualificationAchievedYear = coreFactory.applicantData.QualificationAchievedYear;
        $scope.QualificationType = coreFactory.applicantData.QualificationType;
        $scope.EnrolledNationallyRecognizedCourse = coreFactory.translateBoolean(coreFactory.applicantData.EnrolledNationallyRecognizedCourse);
@@ -82,6 +82,15 @@ angular.module('tlcApp')
      $scope.prev = function(){
        $location.path('/personal');
      }
+     $scope.logout = function(){
+       var isLogout = confirm('Are you sure you want to log out?');
+       if(isLogout){
+         $rootScope.isVerified == false;
+         coreService.removeLocalStorage('lookupData');
+         coreService.removeLocalStorage('applicantData')
+         $location.path('/');
+       }
+     };
      $scope.next = function(){
        this.stepValidMsg = {};
        //init
