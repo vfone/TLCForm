@@ -32,19 +32,19 @@ angular.module('tlcApp')
      //console.log(coreFactory.applicantData);
      if(coreFactory.applicantData.ApplicantId){
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
-       $scope.CountryofBirth = coreFactory.applicantData.CountryofBirth;
-       $scope.CityofBirth = coreFactory.applicantData.CityofBirth;
+       $scope.CountryofBirth = coreFactory.applicantData.CountryofBirth || 13;
+       $scope.CityofBirth = coreFactory.applicantData.CityofBirth || undefined;
        $scope.Aboriginal = coreFactory.translateBoolean(coreFactory.applicantData.Aboriginal);
-       $scope.Origin = coreFactory.applicantData.Origin;
+       $scope.Origin = coreFactory.applicantData.Origin || undefined;
        $scope.SpeakOtherLanguage = coreFactory.translateBoolean(coreFactory.applicantData.SpeakOtherLanguage);
-       $scope.LanguageOtherEnglish = coreFactory.applicantData.LanguageOtherEnglish;
-       $scope.EnglishProficiency = coreFactory.applicantData.EnglishProficiency;
+       $scope.LanguageOtherEnglish = coreFactory.applicantData.LanguageOtherEnglish || undefined;
+       $scope.EnglishProficiency = coreFactory.applicantData.EnglishProficiency || undefined;
        $scope.HoldVisa = coreFactory.translateBoolean(coreFactory.applicantData.HoldVisa);
-       $scope.VisaType = (coreFactory.applicantData.VisaType).toString();
-       $scope.OtherVisaType = coreFactory.applicantData.OtherVisaType;
-       $scope.UploadVisa = coreFactory.translateBoolean(coreFactory.applicantData.UploadVisa);
+       $scope.VisaType = coreFactory.translateString(coreFactory.applicantData.VisaType);
+       $scope.OtherVisaType = coreFactory.applicantData.OtherVisaType || undefined;
+       $scope.UploadVisa = coreFactory.applicantData.UploadVisa  || undefined;
        $scope.Disability = coreFactory.translateBoolean(coreFactory.applicantData.Disability);
-       if(coreFactory.applicantData.DisabilityParts !== undefined){
+       if(coreFactory.applicantData.DisabilityParts !== undefined && coreFactory.applicantData.DisabilityParts.length>0){
          $scope.DisabilityParts.arr = coreFactory.applicantData.DisabilityParts;
          //console.log($scope.DisabilityParts.arr);
          for(var n = 0; n < $scope.DisabilityParts.arr.length; n++){
@@ -55,19 +55,19 @@ angular.module('tlcApp')
        }
 
        $scope.ApplyDAAWSFunding = coreFactory.translateBoolean(coreFactory.applicantData.ApplyDAAWSFunding);
-       $scope.EmergencyContactName = coreFactory.applicantData.EmergencyContactName;
-       $scope.EmergencyContactRelationship = coreFactory.applicantData.EmergencyContactRelationship;
-       $scope.EmergencyContactMobile = coreFactory.applicantData.EmergencyContactMobile;
-       $scope.EmergencySecondContactNo = coreFactory.applicantData.EmergencySecondContactNo;
-       $scope.AdditionalEmergencyContactName = coreFactory.applicantData.EmergencyAdditionalContact;
-       $scope.AdditionalEmergencyContactRelationship = coreFactory.applicantData.AdditionalEmergencyContactRelationship;
-       $scope.AdditionalEmergencyContactMobile = coreFactory.applicantData.AdditionalEmergencyContactMobile;
-       $scope.AdditionalEmergencySecondContactNo = coreFactory.applicantData.AddEmergSecondContactNo;
-       $scope.DoctorName = coreFactory.applicantData.DoctorName;
-       $scope.DoctorPhone = coreFactory.applicantData.DoctorPhone;
-       $scope.PreferredHospital = coreFactory.applicantData.PreferredHospital;
-       $scope.HeardAboutUs = coreFactory.applicantData.HeardAboutUs;
-       $scope.OtherHeardAboutUs = coreFactory.applicantData.OtherHeardAboutUs;
+       $scope.EmergencyContactName = coreFactory.applicantData.EmergencyContactName || undefined;
+       $scope.EmergencyContactRelationship = coreFactory.applicantData.EmergencyContactRelationship || undefined;
+       $scope.EmergencyContactMobile = coreFactory.applicantData.EmergencyContactMobile || undefined;
+       $scope.EmergencySecondContactNo = coreFactory.applicantData.EmergencySecondContactNo || undefined;
+       $scope.AdditionalEmergencyContactName = coreFactory.applicantData.EmergencyAdditionalContact || undefined;
+       $scope.AdditionalEmergencyContactRelationship = coreFactory.applicantData.AdditionalEmergencyContactRelationship || undefined;
+       $scope.AdditionalEmergencyContactMobile = coreFactory.applicantData.AdditionalEmergencyContactMobile || undefined;
+       $scope.AdditionalEmergencySecondContactNo = coreFactory.applicantData.AddEmergSecondContactNo || undefined;
+       $scope.DoctorName = coreFactory.applicantData.DoctorName || undefined;
+       $scope.DoctorPhone = coreFactory.applicantData.DoctorPhone || undefined;
+       $scope.PreferredHospital = coreFactory.applicantData.PreferredHospital || undefined;
+       $scope.HeardAboutUs = coreFactory.applicantData.HeardAboutUs || undefined;
+       $scope.OtherHeardAboutUs = coreFactory.applicantData.OtherHeardAboutUs || undefined;
      }
      $scope.prev = function(){
        $location.path('/employment');
@@ -138,7 +138,6 @@ angular.module('tlcApp')
          this.OtherVisaTypeErr = true;
          this.stepValid = false;
        }
-       console.log(this.OtherVisaTypeErr);
        if(this.HoldVisa === '1' && coreFactory.translateBoolean(this.UploadVisa) === '0'){
          this.UploadVisaErr = true;
          this.stepValid = false;

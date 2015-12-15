@@ -96,9 +96,10 @@ ul.progressStep {
   padding:0;
   background: transparent;
   box-shadow: none;
+  display: table;
 }
 ul.progressStep li{
-  width:25%;
+  width:16.6%;
   box-sizing: border-box;
   display: inline-block;
   background: rgba(0,0,0,0.7);
@@ -107,13 +108,9 @@ ul.progressStep li{
   min-height: 65px;
   padding: 10px 10px;
   font-size: 15px;
-  line-height: 45px;
+  line-height: 15px;
   text-align: center;
   border-right:1px solid rgba(0,0,0,0.2);
-}
-ul.progressStep li.dueline{
-  line-height: 100%;
-  padding-top: 20px;
 }
 ul.progressStep li:first-child{
   border-radius: 3px 0 0 3px;
@@ -125,6 +122,14 @@ ul.progressStep li.active{
   background: rgba(183,205,54,1);
   color:#ffffff;
   box-shadow:1px 3px 5px rgba(0,0,0,0.2) inset;
+}
+ul.progressStep li > div{
+  display: table;
+  height: 45px;
+}
+ul.progressStep li > div div{
+  display: table-cell;
+  vertical-align: middle;
 }
 /*FORM STEP STYLE*/
 .form-step{

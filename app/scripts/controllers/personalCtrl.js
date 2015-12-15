@@ -14,6 +14,7 @@ angular.module('tlcApp')
        //if user not verifed, redirect to login page
        $location.path('/');
      }
+
      $scope.lookupData = coreService.ParseJSON(coreService.getLocalStorage('lookupData'));
      $scope.Titles = $scope.lookupData.Titles;
      $scope.Genders= $scope.lookupData.Genders;
@@ -30,39 +31,39 @@ angular.module('tlcApp')
      if(coreFactory.applicantData.ApplicantId){
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
        $scope.HasAgreeTermAtBeginning = coreFactory.translateDigit(coreFactory.applicantData.HasAgreeTermAtBeginning);
-       $scope.Title = coreFactory.applicantData.Title;
+       $scope.Title = coreFactory.applicantData.Title || undefined;
        $scope.FamilyName = coreFactory.applicantData.FamilyName;
        $scope.GivenName = coreFactory.applicantData.GivenName;
-       $scope.PreferredName = coreFactory.applicantData.PreferredName;
+       $scope.PreferredName = coreFactory.applicantData.PreferredName || undefined;
        var dataDOB = new Date(coreFactory.applicantData.DateOfBirth);
        var ddDOB = parseInt(dataDOB.getDate())>10? dataDOB.getDate() :'0'+dataDOB.getDate();
        var mmDOB = parseInt(dataDOB.getMonth())+1>10? dataDOB.getMonth() :'0'+(parseInt(dataDOB.getMonth())+1);
        var yyyyDOB = dataDOB.getFullYear();
        $scope.DateOfBirth = ddDOB+'/'+mmDOB+'/'+yyyyDOB;
        $(".DateOfBirth").datepicker("update", new Date(coreFactory.applicantData.DateOfBirth));
-       $scope.Gender = coreFactory.applicantData.Gender;
-       $scope.HomePhone = coreFactory.applicantData.HomePhone;
-       $scope.MobilePhone = coreFactory.applicantData.MobilePhone;
-       $scope.WorkPhone = coreFactory.applicantData.WorkPhone;
+       $scope.Gender = coreFactory.applicantData.Gender || undefined;
+       $scope.HomePhone = coreFactory.applicantData.HomePhone || undefined;
+       $scope.MobilePhone = coreFactory.applicantData.MobilePhone || undefined;
+       $scope.WorkPhone = coreFactory.applicantData.WorkPhone || undefined;
        $scope.UserId = coreFactory.applicantData.Email;
-       $scope.HomeAddressLine1 = coreFactory.applicantData.HomeAddressLine1;
-       $scope.HomeAddressLine2 = coreFactory.applicantData.HomeAddressLine2;
-       $scope.HomeSuburb = coreFactory.applicantData.HomeSuburb;
-       $scope.HomeState = coreFactory.applicantData.HomeState;
-       $scope.HomePostCode = parseInt(coreFactory.applicantData.HomePostCode);
-       $scope.PostalAddressLine1 = coreFactory.applicantData.PostalAddressLine1;
-       $scope.PostalAddressLine2 = coreFactory.applicantData.PostalAddressLine2;
-       $scope.PostalSuburb = coreFactory.applicantData.PostalSuburb;
-       $scope.PostalState = coreFactory.applicantData.PostalState;
-       $scope.PostalPostCode = parseInt(coreFactory.applicantData.PostalPostCode);
-       $scope.PreferredMailType = coreFactory.applicantData.PreferredMailType;
+       $scope.HomeAddressLine1 = coreFactory.applicantData.HomeAddressLine1 || undefined;
+       $scope.HomeAddressLine2 = coreFactory.applicantData.HomeAddressLine2 || undefined;
+       $scope.HomeSuburb = coreFactory.applicantData.HomeSuburb || undefined;
+       $scope.HomeState = coreFactory.applicantData.HomeState || 1;
+       $scope.HomePostCode = coreFactory.applicantData.HomePostCode || undefined;
+       $scope.PostalAddressLine1 = coreFactory.applicantData.PostalAddressLine1 || undefined;
+       $scope.PostalAddressLine2 = coreFactory.applicantData.PostalAddressLine2 || undefined;
+       $scope.PostalSuburb = coreFactory.applicantData.PostalSuburb || undefined;
+       $scope.PostalState = coreFactory.applicantData.PostalState || 1;
+       $scope.PostalPostCode = coreFactory.applicantData.PostalPostCode  || undefined;
+       $scope.PreferredMailType = coreFactory.applicantData.PreferredMailType || undefined;
        $scope.HasUSI = coreFactory.translateBoolean(coreFactory.applicantData.HasUSI);
-       $scope.USI = coreFactory.applicantData.USI;
+       $scope.USI = coreFactory.applicantData.USI || undefined;
        $scope.USIAuthorise = coreFactory.translateBoolean(coreFactory.applicantData.USIAuthorise);
        $scope.HasConcessionCard = coreFactory.translateBoolean(coreFactory.applicantData.HasConcessionCard);
-       $scope.ConcessionCardType = coreFactory.applicantData.ConcessionCardType;
-       $scope.ConcessionCardNumber = coreFactory.applicantData.ConcessionCardNumber;
-       $scope.ConcessionCardName = coreFactory.applicantData.ConcessionCardName;
+       $scope.ConcessionCardType = coreFactory.applicantData.ConcessionCardType || 1;
+       $scope.ConcessionCardNumber = coreFactory.applicantData.ConcessionCardNumber || undefined;
+       $scope.ConcessionCardName = coreFactory.applicantData.ConcessionCardName || undefined;
        var dataConcessionCardExpiryDate = new Date(coreFactory.applicantData.ConcessionCardExpiryDate);
        var ddConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getDate())>10? dataConcessionCardExpiryDate.getDate() :'0'+dataConcessionCardExpiryDate.getDate();
        var mmConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getMonth())+1>10? dataConcessionCardExpiryDate.getMonth() :'0'+(parseInt(dataConcessionCardExpiryDate.getMonth())+1);
@@ -129,18 +130,17 @@ angular.module('tlcApp')
          this.HasAgreeTermAtBeginningErr = true;
          this.stepValid = false;
        }
-       if(this.Title === undefined){
+       if(this.Title === undefined || this.Title === 0){
          this.stepValidMsg['Title:'] = "Please select your [Title]";
          this.TitlesErr = true;
          this.stepValid = false;
        }
-       console.log(this.DateOfBirth, coreFactory.ispastDate(this.DateOfBirth))
        if(!coreFactory.UTCTime(this.DateOfBirth) || !coreFactory.ispastDate(this.DateOfBirth)){
          this.stepValidMsg['DOB:'] = "Please select your [Date of Birth]";
          this.DateOfBirthErr = true;
          this.stepValid = false;
        }
-       if(this.Gender === undefined){
+       if(this.Gender === undefined || this.Gender === 0){
          this.stepValidMsg['Gender:'] = "Please select your [Gender]";
          this.GenderErr = true;
          this.stepValid = false;

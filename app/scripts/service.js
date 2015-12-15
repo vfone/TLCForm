@@ -122,12 +122,28 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, coreS
     if(res===true){
       translated = '1';
     }
+    else if(res === null){
+      translated = undefined;
+    }
     return translated;
   }
   coreFn.translateDigit = function(res){
     var translated = true;
     if(res === 0){
       translated = false;
+    }
+    else if(res === null){
+      translated = undefined;
+    }
+    return translated;
+  }
+  coreFn.translateString = function(res){
+    var translated;
+    if(res === null){
+      translated = undefined;
+    }
+    else{
+      translated = res.toString();
     }
     return translated;
   }

@@ -1,8 +1,10 @@
 <ul class="progressStep clearfix">
-  <li class="active">Personal and Contact Details</li>
-  <li class="dueline">Employment, Qualification &amp; Education</li>
-  <li>Other Information</li>
-  <li>Course Selection</li>
+  <li class="active"><div><div>Personal and Contact Details</div></div></li>
+  <li><div><div>Employment, Qualification &amp; Education</div></div></li>
+  <li><div><div>Other Information</div></div></li>
+  <li><div><div>Course Selection</div></div></li>
+  <li><div><div>Upload Documents</div></div></li>
+  <li><div><div>Review And Declaration</div></div></li>
 </ul>
 
 
@@ -65,7 +67,7 @@
       <div class="col-md-6">
         <div class="form-group control-group" ng-class="{'error':DateOfBirthErr}">
           <label for="DateOfBirth">Date of Birth (dd/mm/yyyy)</label>
-          <input type="text" dob class="form-control DateOfBirth" data-date-format="mm/dd/yyyy" data-date-end-date="0d" ng-model="DateOfBirth">
+          <input type="text" dob class="form-control DateOfBirth" data-date-format="dd/mm/yyyy" data-date-end-date="0d" ng-model="DateOfBirth">
         </div>
       </div>
     </div>
@@ -136,7 +138,7 @@
       <div class="col-md-3">
         <div class="form-group control-group" ng-class="{'error':HomePostCodeErr}">
           <label for="HomePostCode">Postcode</label>
-          <input type="number" class="form-control" ng-model="HomePostCode" onKeyDown="if(this.value.length==4) return false;">
+          <input type="text" class="form-control" ng-model="HomePostCode" onKeyDown="if(this.value.length==4) return false;">
         </div>
       </div>
     </div>
@@ -168,7 +170,7 @@
       <div class="col-md-3">
         <div class="form-group control-group" ng-class="{'error':PostalPostCodeErr}">
           <label for="PostalPostCode">Postcode</label>
-          <input type="number" class="form-control" ng-model="PostalPostCode" onKeyDown="if(this.value.length==4) return false;">
+          <input type="text" class="form-control" ng-model="PostalPostCode" onKeyDown="if(this.value.length==4) return false;">
         </div>
       </div>
     </div>
@@ -246,8 +248,8 @@
         </div>
         <div class="col-md-6">
           <div class="form-group control-group" ng-class="{'error':ConcessionCardExpiryDateErr}">
-            <label for="ConcessionCardExpiryDate">Expiry Date</label>
-            <input type="text" expirydate class="form-control ConcessionCardExpiryDate" data-date-start-date="0d" ng-model="ConcessionCardExpiryDate" >
+            <label for="ConcessionCardExpiryDate">Expiry Date (dd/mm/yyyy)</label>
+            <input type="text" expirydate class="form-control ConcessionCardExpiryDate" data-date-start-date="0d" data-date-format="dd/mm/yyyy" ng-model="ConcessionCardExpiryDate" >
           </div>
         </div>
       </div>

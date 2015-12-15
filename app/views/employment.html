@@ -1,8 +1,10 @@
 <ul class="progressStep clearfix">
-  <li>Personal and Contact Details</li>
-  <li class="active dueline">Employment, Qualification &amp; Education</li>
-  <li>Other Information</li>
-  <li>Course Selection</li>
+  <li><div><div>Personal and Contact Details</div></div></li>
+  <li class="active"><div><div>Employment, Qualification &amp; Education</div></div></li>
+  <li><div><div>Other Information</div></div></li>
+  <li><div><div>Course Selection</div></div></li>
+  <li><div><div>Upload Documents</div></div></li>
+  <li><div><div>Review And Declaration</div></div></li>
 </ul>
 <div class="form-step">
   <h1>Employment, Qualification &amp; Education</h1>
@@ -144,7 +146,7 @@
     <div class="control-group">
       <div class="checkbox">
         <label>
-          <input type="checkbox" ng-model="Unemployed" ng-init="Unemployed=false"> I’m currently unemployed.
+          <input type="checkbox" ng-model="Unemployed"> I’m currently unemployed.
         </label>
       </div>
     </div>
@@ -182,7 +184,7 @@
         <div class="col-md-3">
           <div class="form-group control-group" ng-class="{'error':EmployerPostcodeErr}">
             <label for="EmployerPostcode">Postcode</label>
-            <input type="number" class="form-control" ng-model="EmployerPostcode" onKeyDown="if(this.value.length==4) return false;">
+            <input type="text" class="form-control" ng-model="EmployerPostcode" onKeyDown="if(this.value.length==4) return false;">
           </div>
         </div>
       </div>
