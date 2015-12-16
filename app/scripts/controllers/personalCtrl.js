@@ -8,7 +8,7 @@
  * Controller of the tlcApp
  */
 angular.module('tlcApp')
-   .controller('PersonalCtrl', function ($rootScope, $scope, $location, settingFactory, $window, coreService, coreFactory) {
+   .controller('PersonalCtrl', function ($rootScope, $scope, $route, $location, settingFactory, $window, coreService, coreFactory) {
      $scope.coreFactory = coreFactory;
      if(!$rootScope.isVerified){
        //if user not verifed, redirect to login page
@@ -28,7 +28,7 @@ angular.module('tlcApp')
      if($.isEmptyObject(coreFactory.applicantData)){
        coreFactory.applicantData = coreService.ParseJSON(coreService.getLocalStorage('applicantData'));
      }
-     if(coreFactory.applicantData.ApplicantId){
+     if(coreFactory.applicantData){
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
        $scope.HasAgreeTermAtBeginning = coreFactory.translateDigit(coreFactory.applicantData.HasAgreeTermAtBeginning);
        $scope.Title = coreFactory.applicantData.Title || undefined;
@@ -59,7 +59,7 @@ angular.module('tlcApp')
        $scope.PreferredMailType = coreFactory.applicantData.PreferredMailType || undefined;
        $scope.HasUSI = coreFactory.translateBoolean(coreFactory.applicantData.HasUSI);
        $scope.USI = coreFactory.applicantData.USI || undefined;
-       $scope.USIAuthorise = coreFactory.translateBoolean(coreFactory.applicantData.USIAuthorise);
+       $scope.USIAuthorise = coreFactory.applicantData.USIAuthorise || false;
        $scope.HasConcessionCard = coreFactory.translateBoolean(coreFactory.applicantData.HasConcessionCard);
        $scope.ConcessionCardType = coreFactory.applicantData.ConcessionCardType || 1;
        $scope.ConcessionCardNumber = coreFactory.applicantData.ConcessionCardNumber || undefined;
@@ -71,6 +71,7 @@ angular.module('tlcApp')
        $scope.ConcessionCardExpiryDate = ddConcessionCardExpiryDate+'/'+mmConcessionCardExpiryDate+'/'+yyyyConcessionCardExpiryDate;
        $(".ConcessionCardExpiryDate").datepicker("update", new Date(coreFactory.applicantData.ConcessionCardExpiryDate));
      }
+
      $scope.changedValue = function(item){
        console.log(item);
      };
@@ -96,9 +97,10 @@ angular.module('tlcApp')
        var isLogout = confirm('Are you sure you want to log out?');
        if(isLogout){
          $rootScope.isVerified == false;
-         coreService.removeLocalStorage('lookupData');
-         coreService.removeLocalStorage('applicantData')
-         $location.path('/');
+         //coreService.removeLocalStorage('lookupData');
+         coreService.removeLocalStorage('applicantData');
+         $window.location.reload();
+         //$location.path('/');
        }
      };
      $scope.next = function(){
@@ -224,7 +226,7 @@ angular.module('tlcApp')
        $('body').scrollTop(0);
        if(this.stepValid){
          //POST
-         var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "HasAgreeTermAtBeginning": parseInt(coreFactory.translateBoolean(this.HasAgreeTermAtBeginning)), "Title": parseInt(this.Title), "PreferredName": this.PreferredName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": parseInt(this.Gender), "HomePhone": this.HomePhone, "MobilePhone": this.WorkPhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": parseInt(this.HomeState), "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": parseInt(this.PostalState), "PostalPostCode": this.PostalPostCode,"PreferredMailType":parseInt(this.PreferredMailType), "HasUSI": parseInt(this.HasUSI), "USI": this.USI, "USIAuthorise": parseInt(this.USIAuthorise), "HasConcessionCard": parseInt(this.HasConcessionCard), "ConcessionCardType": parseInt(this.ConcessionCardType), "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};
+         var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "HasAgreeTermAtBeginning": parseInt(coreFactory.translateBoolean(this.HasAgreeTermAtBeginning)), "Title": parseInt(this.Title), "PreferredName": this.PreferredName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": parseInt(this.Gender), "HomePhone": this.HomePhone, "MobilePhone": this.MobilePhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": parseInt(this.HomeState), "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": parseInt(this.PostalState), "PostalPostCode": this.PostalPostCode,"PreferredMailType":parseInt(this.PreferredMailType), "HasUSI": parseInt(this.HasUSI), "USI": this.USI, "USIAuthorise": parseInt(coreFactory.translateBoolean(this.USIAuthorise)), "HasConcessionCard": parseInt(this.HasConcessionCard), "ConcessionCardType": parseInt(this.ConcessionCardType), "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};
          coreFactory.postData(settingFactory.step2URL, step2Data, 'step2');
 
        }

@@ -226,7 +226,7 @@ core.factory('coreFactory', function($rootScope, $location, $http, $route, coreS
         }
         if(ev == 'step5'){
           coreService.removeLocalStorage('applicantData');
-          window.location = settingFactory.uploadFile + coreFn.applicantData.ApplicantId;
+          window.location = settingFactory.uploadFile + coreFn.applicantData.ApplicantToken;
         }
         return res;
     }).

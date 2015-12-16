@@ -18,9 +18,7 @@ config.factory('settingFactory', function() {
   setting.step3URL = 'http://tlcapi.cocodemo.com/tlc/api/step3';
   setting.step4URL = 'http://tlcapi.cocodemo.com/tlc/api/step4';
   setting.step5URL = 'http://tlcapi.cocodemo.com/tlc/api/step5';
-  setting.uploadFile = 'http://tlcapi.cocodemo.com/tlc/api/upnext.aspx?id=';
-
-  setting.redirectURL = '/upNext.aspx';
+  setting.uploadFile = 'http://tlcapp.cocodemo.com/upnext.aspx?id=';
 
   return setting;
 });

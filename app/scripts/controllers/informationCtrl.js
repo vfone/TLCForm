@@ -30,7 +30,7 @@ angular.module('tlcApp')
        coreFactory.applicantData = coreService.ParseJSON(coreService.getLocalStorage('applicantData'));
      }
      //console.log(coreFactory.applicantData);
-     if(coreFactory.applicantData.ApplicantId){
+     if(coreFactory.applicantData){
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
        $scope.CountryofBirth = coreFactory.applicantData.CountryofBirth || 13;
        $scope.CityofBirth = coreFactory.applicantData.CityofBirth || undefined;
@@ -77,7 +77,8 @@ angular.module('tlcApp')
        if(isLogout){
          $rootScope.isVerified == false;
          coreService.removeLocalStorage('lookupData');
-         coreService.removeLocalStorage('applicantData')
+         coreService.removeLocalStorage('applicantData');
+         $window.location.reload();
          $location.path('/');
        }
      };

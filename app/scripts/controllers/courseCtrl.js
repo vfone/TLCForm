@@ -27,8 +27,9 @@ angular.module('tlcApp')
      if($.isEmptyObject(coreFactory.applicantData)){
        coreFactory.applicantData = coreService.ParseJSON(coreService.getLocalStorage('applicantData'));
      }
-     if(coreFactory.applicantData.ApplicantId){
+     if(coreFactory.applicantData){
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
+       $scope.ApplicantToken = coreFactory.applicantData.ApplicantToken;
        $scope.CourseID = coreFactory.applicantData.CourseID || undefined;
        if(coreFactory.applicantData.ModeOfStudy !== undefined && coreFactory.applicantData.ModeOfStudy.length >0){
          $scope.ModeOfStudyList.arr = coreFactory.applicantData.ModeOfStudy;
@@ -56,7 +57,8 @@ angular.module('tlcApp')
        if(isLogout){
          $rootScope.isVerified == false;
          coreService.removeLocalStorage('lookupData');
-         coreService.removeLocalStorage('applicantData')
+         coreService.removeLocalStorage('applicantData');
+         $window.location.reload();
          $location.path('/');
        }
      };

@@ -30,7 +30,7 @@ angular.module('tlcApp')
      if($.isEmptyObject(coreFactory.applicantData)){
        coreFactory.applicantData = coreService.ParseJSON(coreService.getLocalStorage('applicantData'));
      }
-     if(coreFactory.applicantData.ApplicantId){
+     if(coreFactory.applicantData){
        //console.log(coreFactory.applicantData);
        $scope.ApplicantId = coreFactory.applicantData.ApplicantId;
        $scope.EmploymentStatus = coreFactory.applicantData.EmploymentStatus || undefined;
@@ -87,7 +87,8 @@ angular.module('tlcApp')
        if(isLogout){
          $rootScope.isVerified == false;
          coreService.removeLocalStorage('lookupData');
-         coreService.removeLocalStorage('applicantData')
+         coreService.removeLocalStorage('applicantData');
+         $window.location.reload();
          $location.path('/');
        }
      };
