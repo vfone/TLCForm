@@ -35,12 +35,14 @@ angular.module('tlcApp')
        $scope.FamilyName = coreFactory.applicantData.FamilyName;
        $scope.GivenName = coreFactory.applicantData.GivenName;
        $scope.PreferredName = coreFactory.applicantData.PreferredName || undefined;
-       var dataDOB = new Date(coreFactory.applicantData.DateOfBirth);
-       var ddDOB = parseInt(dataDOB.getDate())>10? dataDOB.getDate() :'0'+dataDOB.getDate();
-       var mmDOB = parseInt(dataDOB.getMonth())+1>10? dataDOB.getMonth() :'0'+(parseInt(dataDOB.getMonth())+1);
-       var yyyyDOB = dataDOB.getFullYear();
-       $scope.DateOfBirth = ddDOB+'/'+mmDOB+'/'+yyyyDOB;
-       $(".DateOfBirth").datepicker("update", new Date(coreFactory.applicantData.DateOfBirth));
+       if(coreFactory.applicantData.DateOfBirth){
+         var dataDOB = new Date(coreFactory.applicantData.DateOfBirth);
+         var ddDOB = parseInt(dataDOB.getDate())>10? dataDOB.getDate() :'0'+dataDOB.getDate();
+         var mmDOB = parseInt(dataDOB.getMonth())+1>10? parseInt(dataDOB.getMonth())+1 :'0'+(parseInt(dataDOB.getMonth())+1);
+         var yyyyDOB = dataDOB.getFullYear();
+         $scope.DateOfBirth = ddDOB+'/'+mmDOB+'/'+yyyyDOB;
+         $(".DateOfBirth").datepicker("update", new Date(coreFactory.applicantData.DateOfBirth));
+       }
        $scope.Gender = coreFactory.applicantData.Gender || undefined;
        $scope.HomePhone = coreFactory.applicantData.HomePhone || undefined;
        $scope.MobilePhone = coreFactory.applicantData.MobilePhone || undefined;
@@ -64,20 +66,23 @@ angular.module('tlcApp')
        $scope.ConcessionCardType = coreFactory.applicantData.ConcessionCardType || 1;
        $scope.ConcessionCardNumber = coreFactory.applicantData.ConcessionCardNumber || undefined;
        $scope.ConcessionCardName = coreFactory.applicantData.ConcessionCardName || undefined;
-       var dataConcessionCardExpiryDate = new Date(coreFactory.applicantData.ConcessionCardExpiryDate);
-       var ddConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getDate())>10? dataConcessionCardExpiryDate.getDate() :'0'+dataConcessionCardExpiryDate.getDate();
-       var mmConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getMonth())+1>10? dataConcessionCardExpiryDate.getMonth() :'0'+(parseInt(dataConcessionCardExpiryDate.getMonth())+1);
-       var yyyyConcessionCardExpiryDate = dataConcessionCardExpiryDate.getFullYear();
-       $scope.ConcessionCardExpiryDate = ddConcessionCardExpiryDate+'/'+mmConcessionCardExpiryDate+'/'+yyyyConcessionCardExpiryDate;
-       $(".ConcessionCardExpiryDate").datepicker("update", new Date(coreFactory.applicantData.ConcessionCardExpiryDate));
+
+       if(coreFactory.applicantData.ConcessionCardExpiryDate){
+         var dataConcessionCardExpiryDate = new Date(coreFactory.applicantData.ConcessionCardExpiryDate);
+         var ddConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getDate())>10? dataConcessionCardExpiryDate.getDate() :'0'+dataConcessionCardExpiryDate.getDate();
+
+         var mmConcessionCardExpiryDate = parseInt(dataConcessionCardExpiryDate.getMonth())+1>10? parseInt(dataConcessionCardExpiryDate.getMonth())+1 :'0'+(parseInt(dataConcessionCardExpiryDate.getMonth())+1);
+         var yyyyConcessionCardExpiryDate = dataConcessionCardExpiryDate.getFullYear();
+         $scope.ConcessionCardExpiryDate = ddConcessionCardExpiryDate+'/'+mmConcessionCardExpiryDate+'/'+yyyyConcessionCardExpiryDate;
+         $(".ConcessionCardExpiryDate").datepicker("update", new Date(coreFactory.applicantData.ConcessionCardExpiryDate));
+       }
      }
 
      $scope.changedValue = function(item){
-       console.log(item);
+       //console.log(item);
      };
      $scope.sameAddress = function(){
-       console.log(this.HomeState);
-       console.log(this.PostalState);
+
        if(this.isSameAddress){
          this.PostalAddressLine1 = this.HomeAddressLine1;
          this.PostalAddressLine2 = this.HomeAddressLine2;
@@ -223,7 +228,7 @@ angular.module('tlcApp')
          this.ConcessionCardExpiryDateErr = true;
          this.stepValid = false;
        }
-       $('body').scrollTop(0);
+       $(window).scrollTop(0);
        if(this.stepValid){
          //POST
          var step2Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "HasAgreeTermAtBeginning": parseInt(coreFactory.translateBoolean(this.HasAgreeTermAtBeginning)), "Title": parseInt(this.Title), "PreferredName": this.PreferredName, "DateofBirth": coreFactory.UTCTime(this.DateOfBirth), "Gender": parseInt(this.Gender), "HomePhone": this.HomePhone, "MobilePhone": this.MobilePhone, "WorkPhone": this.WorkPhone, "HomeAddressLine1": this.HomeAddressLine1, "HomeAddressLine2": this.HomeAddressLine2, "HomeSuburb": this.HomeSuburb, "HomeState": parseInt(this.HomeState), "HomePostCode": this.HomePostCode, "PostalAddressLine1": this.PostalAddressLine1, "PostalAddressLine2": this.PostalAddressLine2, "PostalSuburb": this.PostalSuburb, "PostalState": parseInt(this.PostalState), "PostalPostCode": this.PostalPostCode,"PreferredMailType":parseInt(this.PreferredMailType), "HasUSI": parseInt(this.HasUSI), "USI": this.USI, "USIAuthorise": parseInt(coreFactory.translateBoolean(this.USIAuthorise)), "HasConcessionCard": parseInt(this.HasConcessionCard), "ConcessionCardType": parseInt(this.ConcessionCardType), "ConcessionCardNumber": this.ConcessionCardNumber, "ConcessionCardName": this.ConcessionCardName, "ConcessionCardExpiryDate": coreFactory.UTCTime(this.ConcessionCardExpiryDate)};

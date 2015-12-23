@@ -119,7 +119,7 @@ angular.module('tlcApp')
          this.stepValid = false;
        }
 
-       $('body').scrollTop(0);
+       $(window).scrollTop(0);
        if(this.stepValid){
          var step5Data = {"PassKey": settingFactory.passKey, "ApplicantID": this.ApplicantId, "CourseID": parseInt(this.CourseID), "ModeOfStudy": this.ModeOfStudyList.arr, "ApplyRPL": parseInt(this.ApplyRPL), "ApplyCreditTransfer": parseInt(this.ApplyCreditTransfer), "StudyReason": parseInt(this.StudyReason), "OtherStudyReason": this.OtherStudyReason, "PassYear10English": parseInt(coreFactory.translateBoolean(this.PassYear10English)), "CompleteEnglishTest": parseInt(coreFactory.translateBoolean(this.CompleteEnglishTest)), "IELTSScore": this.IELTSScore};
          coreFactory.postData(settingFactory.step5URL, step5Data, 'step5');

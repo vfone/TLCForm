@@ -27,7 +27,7 @@
       <label for="StudyOfMode">Please refer to the Course Guide for full details of study modes and funding opportunities. Course Guide and Details are also available at <a href="www.tlctrainingsolutions.com.au" target="_blank">www.tlctrainingsolutions.com.au</a>  </label>
       <br/>
       <div class="row section">
-        <div class="col-md-6" ng-repeat="StudyMode in StudyModes">
+        <div class="col-md-6 normalLabel" ng-repeat="StudyMode in StudyModes">
           <label class="checkbox" for="{{StudyMode.StudyModeId}}">
             <input type="checkbox" ng-model="ModeOfStudyList.ids[StudyMode.StudyModeId]" name="group" id="{{StudyMode.StudyModeId}}" />
             {{StudyMode.StudyModeDescription}}

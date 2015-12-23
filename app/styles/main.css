@@ -140,7 +140,7 @@ ul.progressStep li > div div{
 }
 .form-step h1{
   margin: 0;
-  padding: 5px;
+  padding: 5px 15px;
   background-color: #70328f;
   color:#ffffff;
 }
@@ -167,6 +167,9 @@ ul.progressStep li > div div{
 .form-step label.fullwidth{
   width:80%;
   margin-left: 0;
+}
+.normalLabel label{
+  font-weight: normal !important;
 }
 .bottomCtrl{
   background-color: rgba(43,193,241,0.2);

@@ -159,7 +159,7 @@ angular.module('tlcApp')
          this.stepValid = false;
        }
 
-      if(this.ApplyDAAWSFunding === undefined){
+      if(this.Disability === '1' && this.ApplyDAAWSFunding === undefined){
         this.ApplyDAAWSFundingErr = true;
         this.stepValid = false;
       }
@@ -168,7 +168,7 @@ angular.module('tlcApp')
         this.stepValid = false;
       }
 
-      $('body').scrollTop(0);
+      $(window).scrollTop(0);
        if(this.stepValid){
          //POST
          var step4Data = {'PassKey': settingFactory.passKey, 'ApplicantId': this.ApplicantId, 'CountryofBirth': parseInt(this.CountryofBirth), 'CityofBirth': this.CityofBirth, 'Aboriginal': parseInt(this.Aboriginal), 'Origin': parseInt(this.Origin), 'SpeakOtherLanguage': parseInt(this.SpeakOtherLanguage), 'LanguageOtherEnglish': this.LanguageOtherEnglish, 'EnglishProficiency': parseInt(this.EnglishProficiency), 'HoldVisa': parseInt(this.HoldVisa), 'VisaType': parseInt(this.VisaType), 'OtherVisaType': this.OtherVisaType, 'UploadVisa': parseInt(coreFactory.translateBoolean(this.UploadVisa)), 'Disability': parseInt(this.Disability), 'DisabilityParts': this.DisabilityParts.arr, 'ApplyDAAWSFunding': parseInt(this.ApplyDAAWSFunding), 'EmergencyContactName': this.EmergencyContactName, 'EmergencyContactRelationship': this.EmergencyContactRelationship, 'EmergencyContactMobile': this.EmergencyContactMobile, 'EmergencySecondContactNo': this.EmergencySecondContactNo, 'EmergencyAdditionalContact': this.AdditionalEmergencyContactName, 'AdditionalEmergencyContactRelationship': this.AdditionalEmergencyContactRelationship, 'AdditionalEmergencyContactMobile': this.AdditionalEmergencyContactMobile, 'AddEmergSecondContactNo': this.AdditionalEmergencySecondContactNo,'DoctorName': this.DoctorName,'DoctorPhone':this.DoctorPhone, 'PreferredHospital': this.PreferredHospital, 'HeardAboutUs': parseInt(this.HeardAboutUs), 'OtherHeardAboutUs': this.OtherHeardAboutUs};
