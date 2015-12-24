@@ -43,11 +43,12 @@ angular.module('tlcApp')
        var recoveryData = {"PassKey": settingFactory.passKey, "UserId": this.UserId};
        //post to step1 for signup
        coreFactory.postData(settingFactory.recoveryURL, recoveryData, 'recovery');
-       
+
      };
      $scope.fnReset = function(){
-       var resetData = {"PassKey": settingFactory.passKey, "Token": this.token, "Password": this.ResetPassword};
+       var resetData = {"PassKey": settingFactory.passKey, "NewPassword": this.ResetPassword, "TokenId": this.token};
        //post to step1 for signup
+       console.log(resetData);
        coreFactory.postData(settingFactory.resetURL, resetData, 'reset');
      };
      $scope.checkEmail = function(){
